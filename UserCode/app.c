@@ -34,6 +34,7 @@
 
 #include <includes.h>
 #include "main.h"
+#include "menu.h"
 
 /*
 *********************************************************************************************************
@@ -68,9 +69,14 @@ static void App_TaskCount(void *p_arg);
 *********************************************************************************************************
 */
 
+
+menu_t menu[2];
 int  main (void)
 {
 
+    Menu_HeadInit(&menu[0]);
+    Menu_AddBrotherAfter(&menu[0],&menu[1]);
+      
     CPU_INT08U  os_err;
 
 

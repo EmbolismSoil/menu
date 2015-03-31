@@ -1055,6 +1055,9 @@
     <file>
       <name>$PROJ_DIR$\..\UserCode\app.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\menu.c</name>
+    </file>
   </group>
 </project>
 
