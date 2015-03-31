@@ -1,0 +1,19 @@
+"--endian=little" 
+
+"--cpu=Cortex-M4F" 
+
+"--fpu=VFPv4" 
+
+"-p" 
+
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\CONFIG\debugger\ST\STM32F401xE.ddf" 
+
+"--semihosting" 
+
+"--device=STM32F401xE" 
+
+"--multicore_nr_of_cores=1" 
+
+
+
+
