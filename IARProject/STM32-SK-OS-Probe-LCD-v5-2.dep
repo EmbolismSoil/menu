@@ -2,7 +2,7 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>2439724342</fileChecksum>
+  <fileChecksum>1736999622</fileChecksum>
   <configuration>
     <name>Flash</name>
     <outputs>
@@ -123,6 +123,10 @@
       <file>$PROJ_DIR$\..\CPU\ST\STM32\m4inc\stm32f4xx_hal_flash_ramfunc.h</file>
       <file>$PROJ_DIR$\..\BSP\stm32f401xe_flash.icf</file>
       <file>$PROJ_DIR$\..\..\ucosiiProjectTemplate\UserCode\app.c</file>
+      <file>$PROJ_DIR$\Flash\Obj\fifo.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\fifo.pbi</file>
+      <file>$PROJ_DIR$\..\UserCode\fifo.h</file>
+      <file>$PROJ_DIR$\..\UserCode\fifo.c</file>
       <file>$PROJ_DIR$\Flash\Obj\menu.o</file>
       <file>$PROJ_DIR$\Flash\Obj\menu.pbi</file>
     </outputs>
@@ -143,6 +147,10 @@
           <name>ICCARM</name>
           <file> 42 56 39 52 50 85 23 92 38 41 79 84 37 27 22 81 45 95 94 89 86 88 44 43 75 107 105 70 104 101 103 53 20 99 11 82 102 76 10 98 74 65 97 17 71 6 83 9 77 66 7 8 35 13 62 67 4 34 100 72 32 106 64 111 1 110 2 16 33 114 14 25 54 96 109 55 15 59 31 61 68 58 30 47 46 28 60 5 112 48 29 26 73 63 78 69 49 51 12 21 90</file>
         </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 110 11 35 27 105 78 66 97 43 41 85 39 52 74 25 59 58 26 21 92 38 104 111 16 46 13 17 71 83 90 56 101 23 22 89 95 70 20 82 64 1 2 14 54 55 47 48 63 6 77 34 32 10 84 44 103 99 102 79 50 37 81 94 88 45 86 75 107 53 76 98 96 109 61 68 60 112 73 69 49 65 62 4 100 72 106 9 7 8 67 15 12 42 33 114 31 30 28 5 29 51</file>
+        </tool>
       </inputs>
     </file>
     <file>
@@ -159,12 +167,35 @@
       <inputs>
         <tool>
           <name>ILINK</name>
-          <file> 115 87 117 3 113 36 93 18 19 80</file>
+          <file> 115 87 117 121 3 113 36 93 18 19 80</file>
         </tool>
       </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\..\UserCode\menu.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 121</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 122</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 90 56 39 52 50 85 23 92 38 41 79 84 37 95</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 92 52 50 95 79 84 56 39 41 90 38 85 23 37</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\fifo.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
@@ -178,11 +209,11 @@
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 90 56 39 52 50 85 23 92 38 41 79 84 37 95</file>
+          <file> 119 95 39 52 50 85 23 92 38 41 84 37</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 92 52 50 95 79 84 56 39 41 90 38 85 23 37</file>
+          <file> 92 50 52 84 39 95 41 119 38 85 23 37</file>
         </tool>
       </inputs>
     </file>
