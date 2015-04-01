@@ -50,11 +50,34 @@ extern menu_t* Menu_Pre(void);
 extern menu_t* Menu_AddBrotherAfter(menu_t *dstMenu, menu_t *srcMenu);
 extern menu_t* Menu_AddBrotherBefore(menu_t *dstMenu, menu_t *srcMenu);
 extern menu_t* Menu_HeadInit(menu_t* root);
- 
- 
+extern menu_t* Menu_NewMenu(char *menuString, menu_t* Parent,
+                     actFuncAndArg_t *EnteractList,
+                      actFuncAndArg_t *BackActList,
+                      actFuncAndArg_t *Updata);
 
+/**********************************************************************************
+                                   Demo
+**********************************************************************************
+void *updata(void *unused)
+{
+    printf("hello world");
+    return NULL;
+}
 
+actFuncAndArg_t Updata =
+{
+   .Func = updata,
+   .Arg = NULL,
+};
 
-
+int main(void)
+{
+   menu_t *menu =   Menu_NewMenu("Root",NULL,NULL,NULL,&Updata);
+   menu_t *SubMenu = Menu_NewMenu("SubMenu",menu,NULL,NULL,&Updata);
+   Menu_Enter();
+}
+***********************************************************************************
+                                Demo End
+**********************************************************************************/
 
 #endif

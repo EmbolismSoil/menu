@@ -724,11 +724,11 @@
         </option>
         <option>
           <name>IlinkIcfOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$TOOLKIT_DIR$\config\linker\ST\stm32f401xE.icf</state>
+          <state>E:\&#x7535;&#x8D5B;\&#x8BAD;&#x7eC3;\&#x8F6F;&#x4eF6;\userProj\BSP\stm32f401xe_flash.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>

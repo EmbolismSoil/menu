@@ -1,4 +1,6 @@
 #include "menu.h"
+#include <string.h>
+#include <stdlib.h>
 
 /*头指针，指向当前所在菜单条目*/
 static menu_t *head;
@@ -15,9 +17,11 @@ static menu_t *head;
           head->Updata->Func(head->Updata->Arg);
       head = head->subMenuList;
   }else{
-      while(head->EnterActList){/*如果当前菜单下没有子菜单，那就执行进入菜单时的动作*/
-          head->EnterActList->Func(head->EnterActList->Arg);
-          head->EnterActList = head->EnterActList->NextFunc;
+      actFuncAndArg_t *tmpAct = head->EnterActList;
+      while(tmpAct){/*如果当前菜单下没有子菜单，那就执行进入菜单时的动作,然后再执行updata*/
+          tmpAct->Func(head->EnterActList->Arg);
+          tmpAct = tmpAct->NextFunc;
+          head->Updata->Func(head->Updata->Arg);
       }
   }
   
@@ -59,14 +63,16 @@ menu_t *Menu_Del(menu_t *srcMenu)
 {
     if (!srcMenu) return NULL;
 
-    if (srcMenu->NextBrother && srcMenu->NextBrother){
+    if (srcMenu->NextBrother && srcMenu->PreBrother){
         srcMenu->NextBrother->PreBrother = srcMenu->PreBrother;
         srcMenu->PreBrother->NextBrother = srcMenu->NextBrother;
     }else if(srcMenu->NextBrother && !srcMenu->NextBrother){
         srcMenu->NextBrother->PreBrother = NULL;
     }else if (!srcMenu->NextBrother && srcMenu->PreBrother){
         srcMenu->PreBrother->NextBrother = NULL;
-    }else  return srcMenu;
+    };
+    
+    return srcMenu;
 }
 
  menu_t* Menu_AddBrotherAfter(menu_t *dstMenu, menu_t *srcMenu)
@@ -127,11 +133,16 @@ menu_t* Menu_AddSubMenuTail(menu_t* Parent, menu_t* Sub)
     Menu_Del(Sub);
      
     menu_t *tmpMenu = Parent->subMenuList;
-    while(tmpMenu->NextBrother)
-      tmpMenu = tmpMenu->NextBrother;
+ 
+    while(tmpMenu)
+      tmpMenu = tmpMenu->subMenuList->NextBrother;
+ 
+    if (tmpMenu)
+       Menu_AddBrotherAfter(tmpMenu,Sub);
+    else Parent->subMenuList = Sub;
     
     Sub->Parent = Parent;
-    return Menu_AddBrotherAfter(tmpMenu,Sub);
+    return Sub;
 }
 
 menu_t* Menu_AddSubMenuHead(menu_t* Parent, menu_t* Sub)
@@ -148,4 +159,46 @@ menu_t* Menu_AddSubMenuHead(menu_t* Parent, menu_t* Sub)
     Parent->subMenuList->PreBrother = Sub;
     Sub->NextBrother = Parent->subMenuList;
     return Sub;
+}
+
+menu_t* Menu_NewMenu(char *menuString, menu_t* Parent,
+                     actFuncAndArg_t *EnterActList,
+                      actFuncAndArg_t *BackActList,
+                      actFuncAndArg_t *Updata)
+{
+    menu_t *menu = (menu_t*)malloc(sizeof(menu_t));
+    
+    if (menu){
+        memset(menu,0,sizeof(menu_t)*2);
+        menu->NextBrother = NULL;
+        menu->PreBrother = NULL;
+        menu->Parent = NULL;
+        menu->subMenuList = NULL;
+        menu->IDNum = -1;
+        menu->pri = NULL;
+        menu->Updata = NULL;
+        
+        if (!menuString)
+            return NULL;
+        else{
+            menu->menuName = menuString;
+            if (EnterActList)
+              menu->EnterActList = EnterActList;
+            if (BackActList)
+              menu->BackActList = BackActList;
+            if (!Updata)
+              return NULL;
+            else menu->Updata = Updata;
+            if (Parent)
+              Menu_AddSubMenuTail(Parent,menu);
+            else if (head)
+              Menu_AddSubMenuTail(head,menu);
+            else
+              head = menu;
+        }
+        
+        return menu;
+    }
+    
+    return NULL;
 }
