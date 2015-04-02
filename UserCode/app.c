@@ -1,30 +1,3 @@
-/*
-*********************************************************************************************************
-*                                              EXAMPLE CODE
-*
-*                          (c) Copyright 2003-2007; Micrium, Inc.; Weston, FL
-*
-*               All rights reserved.  Protected by international copyright laws.
-*               Knowledge of the source code may NOT be used to develop a similar product.
-*               Please help us continue to provide the Embedded community with the finest
-*               software available.  Your honesty is greatly appreciated.
-*********************************************************************************************************
-*/
-
-/*
-*********************************************************************************************************
-*
-*                                            EXAMPLE CODE
-*
-*                                     ST Microelectronics STM32
-*                                              with the
-*                                   IAR STM32-SK Evaluation Board
-*
-* Filename      : app.c
-* Version       : V1.10
-* Programmer(s) : BAN
-*********************************************************************************************************
-*/
 
 /*
 *********************************************************************************************************
@@ -35,26 +8,12 @@
 #include <includes.h>
 #include "main.h"
 #include "menu.h"
-
-
-/*
-*********************************************************************************************************
-*                                            LOCAL DEFINES
-*********************************************************************************************************
-*/
-
-
-/*
-*********************************************************************************************************
-*                                       LOCAL GLOBAL VARIABLES
-*********************************************************************************************************
-*/
+#include "clock.h"
+#include "User_GPIO.h"
+#include "LCD12864P.h"
 
 static  OS_STK          App_TaskStartStk[128];
-static OS_STK           App_TaskCountStk[128];
-
-static  void  App_TaskStart              (void        *p_arg);
-static void App_TaskCount(void *p_arg);
+static  void  App_TaskStart (void        *p_arg);
 
 
 /*
@@ -73,13 +32,18 @@ static void App_TaskCount(void *p_arg);
 int  main (void)
 {
 
-    CPU_INT08U  os_err;
 
-    CPU_IntDis();                                            /* Disable all ints until we are ready to accept them.  */
+    HAL_Init();    CPU_INT08U  os_err;
 
-    OSInit();                                                   /* Initialize "uC/OS-II, The Real-Time Kernel".         */
+    SystemClock_Config_84M();
 
-    os_err = OSTaskCreateExt((void (*)(void *)) App_TaskStart,  /* Create the start task.                               */
+
+    /* Disable all ints until we are ready to accept them.  */
+    CPU_IntDis();
+    /* Initialize "uC/OS-II, The Real-Time Kernel".         */
+    OSInit();
+   /* Create the start task.                               */
+    os_err = OSTaskCreateExt((void (*)(void *)) App_TaskStart,
                              (void          * ) 0,
                              (OS_STK        * )&App_TaskStartStk[128 - 1],
                              (INT8U           ) APP_TASK_START_PRIO,
@@ -89,20 +53,8 @@ int  main (void)
                              (void          * )0,
                              (INT16U          )(OS_TASK_OPT_STK_CLR | OS_TASK_OPT_STK_CHK));
 
-        OSTaskCreateExt((void (*)(void *)) App_TaskCount,  /* Create the start task.                               */
-                             (void          * ) 0,
-                             (OS_STK        * )&App_TaskCountStk[128 - 1],
-                             (INT8U           ) 12,
-                             (INT16U          ) 12,
-                             (OS_STK        * )&App_TaskCountStk[0],
-                             (INT32U          ) APP_TASK_START_STK_SIZE,
-                             (void          * )0,
-                             (INT16U          )(OS_TASK_OPT_STK_CLR | OS_TASK_OPT_STK_CHK));
-#if (OS_TASK_NAME_SIZE >= 11)
-    OSTaskNameSet(APP_TASK_START_PRIO, (CPU_INT08U *)"Start Task", &os_err);
-#endif
-
-    OSStart();                                                  /* Start multitasking (i.e. give control to uC/OS-II).  */
+   /* Start multitasking (i.e. give control to uC/OS-II).  */
+    OSStart();
 
     return (0);
 }
@@ -111,7 +63,7 @@ int  main (void)
 *********************************************************************************************************
 *                                          App_TaskStart()
 *
-* Description : The startup task.  The uC/OS-II ticker should only be initialize once multitasking starts.
+* Description : 主进程，它是所有进程的父进程。进行相关初始化之后创建其它进程，之后被挂起，且不再唤醒。
 *
 * Argument(s) : p_arg       Argument passed to 'App_TaskStart()' by 'OSTaskCreate()'.
 *
@@ -122,28 +74,27 @@ int  main (void)
 * Note(s)     : none.
 *********************************************************************************************************
 */
-
 static  void  App_TaskStart (void *p_arg)
 {
-    unsigned int cnt = 0;
-    OS_CPU_SysTickInit();                                       /* Initialize the SysTick.                              */
+    p_arg = p_arg;
+    unsigned char row = 1;
+
+    OS_CPU_SysTickInit();
     OSStatInit();
+
+   User_GPIOEXTI(GPIOC,13,GPIO_MODE_IT_FALLING,FAST,NOPULL,5,5);
+   User_GPIOInit(GPIOA,5,GPIO_MODE_OUTPUT_PP,FAST,PULLUP);
+
+   Init_Lcd();
     while(1){
-        while (cnt <= 1000)
-          cnt++;
-        OSTimeDly(10);
-       cnt = 0;
+        OSTaskSuspend(APP_TASK_START_PRIO);
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
     };
 }
 
-static void App_TaskCount(void *p_arg)
+void HAL_GPIO_EXTI_Callback ( uint16_t GPIO_Pin)
 {
-    int cnt = 0;
-    while (cnt <= 1000)
-    {
-        if (cnt == 999) cnt = 0;
-        else cnt++;
-    //    OSTimeDly(100);
-    }
+    /*选用下降沿触发键盘，就免去松手检测*/
+    GPIO_Pin = GPIO_Pin;
+    OSTaskResume(APP_TASK_START_PRIO);
 }
-

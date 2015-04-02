@@ -2,11 +2,31 @@
 
 <userOverrides>
   <override>
+    <path>E:\&#x7535;&#x8D5B;\&#x8BAD;&#x7eC3;\&#x8F6F;&#x4eF6;\userProj\UserCode\app.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>E:\&#x7535;&#x8D5B;\&#x8BAD;&#x7eC3;\&#x8F6F;&#x4eF6;\userProj\UserCode\clock.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>E:\&#x7535;&#x8D5B;\&#x8BAD;&#x7eC3;\&#x8F6F;&#x4eF6;\userProj\UserCode\interaction.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
     <path>E:\&#x7535;&#x8D5B;\&#x8BAD;&#x7eC3;\&#x8F6F;&#x4eF6;\userProj\UserCode\menu.c</path>
     <encoding>System</encoding>
   </override>
   <override>
     <path>E:\&#x7535;&#x8D5B;\&#x8BAD;&#x7eC3;\&#x8F6F;&#x4eF6;\userProj\UserCode\menu.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>E:\&#x7535;&#x8D5B;\&#x8BAD;&#x7eC3;\&#x8F6F;&#x4eF6;\userProj\UserCode\userdriver\LCD12864P.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>E:\&#x7535;&#x8D5B;\&#x8BAD;&#x7eC3;\&#x8F6F;&#x4eF6;\userProj\UserCode\userdriver\LCD12864P.h</path>
     <encoding>System</encoding>
   </override>
 </userOverrides>

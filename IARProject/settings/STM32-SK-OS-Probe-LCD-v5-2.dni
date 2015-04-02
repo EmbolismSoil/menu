@@ -16,7 +16,7 @@ TypeViolation=1
 UnspecRange=1
 ActionState=1
 [DebugChecksum]
-Checksum=-183125629
+Checksum=1239396530
 [CodeCoverage]
 Enabled=_ 0
 [Exceptions]
@@ -104,8 +104,13 @@ Category=_ 0
 LoggingEnabled=_ 0
 LogFile=_ ""
 [Aliases]
-A0=_ "E:\项目\IAR项目文件\STM32_NUCLEO\stm32cubef4\STM32Cube_FW_F4_V1.3.0\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c" ""
-Count=1
+A0=_ "D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.0\arm\CMSIS\Include\core_cm4.h" ""
+A1=_ "E:\电赛\训练\软件\libtest\BSP\startup_stm32f401xe.s" ""
+A2=_ "E:\项目\IAR项目文件\STM32_NUCLEO\stm32cubef4\STM32Cube_FW_F4_V1.3.0\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c" ""
+A3=_ "E:\项目\IAR项目文件\STM32_NUCLEO\stm32cubef4\STM32Cube_FW_F4_V1.3.0\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cortex.c" ""
+A4=_ "E:\项目\IAR项目文件\STM32_NUCLEO\stm32cubef4\STM32Cube_FW_F4_V1.3.0\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_gpio.c" ""
+A5=_ "E:\项目\IAR项目文件\STM32_NUCLEO\stm32cubef4\STM32Cube_FW_F4_V1.3.0\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c" ""
+Count=6
 SuppressDialog=0
 [CallStackLog]
 Enabled=0

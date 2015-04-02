@@ -981,7 +981,7 @@
         <debug>1</debug>
         <option>
           <name>GenRtcDebugHeap</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenRtcEnableBoundsChecking</name>
@@ -1009,7 +1009,7 @@
         </option>
         <option>
           <name>GenRtcIntOverflow</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenRtcIncUnsigned</name>
@@ -1033,15 +1033,15 @@
         </option>
         <option>
           <name>GenRtcUnhandledCase</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenRtcDivByZero</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenRtcEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenRtcCheckPtrsNonInstrFunc</name>
@@ -1053,7 +1053,7 @@
   <group>
     <name>APP</name>
     <file>
-      <name>$PROJ_DIR$\..\UserCode\app.c</name>
+      <name>$PROJ_DIR$\..\UserCode\clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\UserCode\fifo.c</name>
@@ -1062,9 +1062,21 @@
       <name>$PROJ_DIR$\..\UserCode\fifo.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\UserCode\menu.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\stm32f4xx_it.c</name>
+    </file>
   </group>
+  <file>
+    <name>$PROJ_DIR$\..\UserCode\app.c</name>
+  </file>
 </project>
 
 

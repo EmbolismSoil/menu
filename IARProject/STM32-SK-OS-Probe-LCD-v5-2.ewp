@@ -314,6 +314,7 @@
           <state>$PROJ_DIR$\..\uC-Probe\Target\Communication\Generic\RS-232\Ports\ST\STM32</state>
           <state>$PROJ_DIR$\..\CPU\ST\STM32\m4inc</state>
           <state>$PROJ_DIR$\..\UserCode</state>
+          <state>$PROJ_DIR$\..\UserCode\userdriver</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -964,7 +965,7 @@
   <group>
     <name>APP</name>
     <file>
-      <name>$PROJ_DIR$\..\UserCode\app.c</name>
+      <name>$PROJ_DIR$\..\UserCode\clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\UserCode\fifo.c</name>
@@ -973,9 +974,21 @@
       <name>$PROJ_DIR$\..\UserCode\fifo.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\UserCode\menu.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\stm32f4xx_it.c</name>
+    </file>
   </group>
+  <file>
+    <name>$PROJ_DIR$\..\UserCode\app.c</name>
+  </file>
 </project>
 
 

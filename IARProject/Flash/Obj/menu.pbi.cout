@@ -32,6 +32,8 @@ E:\电赛\训练\软件\userProj\IARProject\..\CPU\ST\STM32\m4inc
 -I
 E:\电赛\训练\软件\userProj\IARProject\..\UserCode
 -I
+E:\电赛\训练\软件\userProj\IARProject\..\UserCode\userdriver
+-I
 D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\CMSIS\Include
 -I
 D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\inc
@@ -67,6 +69,8 @@ E:\电赛\训练\软件\userProj\uC-Probe\Target\Communication\Generic\RS-232\Ports\ST
 E:\电赛\训练\软件\userProj\CPU\ST\STM32\m4inc
 -I
 E:\电赛\训练\软件\userProj\UserCode
+-I
+E:\电赛\训练\软件\userProj\UserCode\userdriver
 -I
 D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\CMSIS\Include
 -DUSE_HAL_DRIVER=1
