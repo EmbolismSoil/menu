@@ -13,6 +13,6 @@ typedef  unsigned int uint;
 typedef  unsigned char uchar;
 
 extern void Init_Lcd(void);
-extern void User_printf (uchar x, uchar y, const char *fmt,...);
+extern void User_printf (uchar x, uchar y,uchar align,const char *fmt,...);
 
 #endif /* LCD12864P_H_ */

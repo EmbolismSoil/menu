@@ -59,12 +59,7 @@
             <group checked="true" name="COMMENT">
               <check checked="true" name="COMMENT-nested"/>
             </group>
-            <group checked="false" name="CONCURRENCY">
-              <check checked="true" name="CONCURRENCY-double-lock"/>
-              <check checked="true" name="CONCURRENCY-double-unlock"/>
-              <check checked="true" name="CONCURRENCY-lock-no-unlock"/>
-              <check checked="true" name="CONCURRENCY-sleep-while-locking"/>
-            </group>
+            <check checked="false" name="CONCURRENCY"/>
             <group checked="true" name="CONST">
               <check checked="false" name="CONST-local"/>
               <check checked="true" name="CONST-member-ret"/>
@@ -114,8 +109,6 @@
               <check checked="true" name="EXPR-const-overflow"/>
             </group>
             <group checked="true" name="FPT">
-              <check checked="true" name="FPT-arith-address"/>
-              <check checked="true" name="FPT-arith"/>
               <check checked="true" name="FPT-cmp-null"/>
               <check checked="false" name="FPT-literal"/>
               <check checked="true" name="FPT-misuse"/>
@@ -125,10 +118,7 @@
               <check checked="false" name="FUNC-unprototyped-all"/>
               <check checked="true" name="FUNC-unprototyped-used"/>
             </group>
-            <group checked="true" name="IDENT">
-              <check checked="false" name="IDENT-long-scope-31-chars"/>
-              <check checked="false" name="IDENT-long-scope-63-chars"/>
-            </group>
+            <check checked="true" name="IDENT"/>
             <group checked="true" name="INCLUDE">
               <check checked="false" name="INCLUDE-c-file"/>
             </group>
@@ -220,10 +210,7 @@
               <check checked="true" name="MEM-use-free-all"/>
               <check checked="true" name="MEM-use-free-some"/>
             </group>
-            <group checked="true" name="POR">
-              <check checked="true" name="POR-imp-cast-subscript"/>
-              <check checked="false" name="POR-imp-cast-ternary"/>
-            </group>
+            <check checked="true" name="POR"/>
             <group checked="true" name="PTR">
               <check checked="true" name="PTR-alias-null-pos-deref"/>
               <check checked="true" name="PTR-arith-field"/>
@@ -279,19 +266,13 @@
               <check checked="false" name="RESOURCE-implicit-deref-file"/>
               <check checked="true" name="RESOURCE-write-ronly-file"/>
             </group>
-            <group checked="true" name="SEM">
-              <check checked="false" name="SEM-const-call"/>
-              <check checked="false" name="SEM-const-global"/>
-              <check checked="false" name="SEM-pure-call"/>
-              <check checked="false" name="SEM-pure-global"/>
-            </group>
+            <check checked="true" name="SEM"/>
             <group checked="true" name="SIZEOF">
               <check checked="true" name="SIZEOF-side-effect"/>
             </group>
             <group checked="true" name="SPC">
               <check checked="false" name="SPC-init-list"/>
               <check checked="true" name="SPC-order"/>
-              <check checked="true" name="SPC-return"/>
               <check checked="true" name="SPC-uninit-arr-all"/>
               <check checked="true" name="SPC-uninit-struct-field-heap"/>
               <check checked="true" name="SPC-uninit-struct-field"/>
@@ -1041,7 +1022,7 @@
         </option>
         <option>
           <name>GenRtcEnable</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>GenRtcCheckPtrsNonInstrFunc</name>
@@ -1053,19 +1034,16 @@
   <group>
     <name>APP</name>
     <file>
+      <name>$PROJ_DIR$\..\UserCode\app.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\UserCode\clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\UserCode\fifo.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\UserCode\fifo.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\UserCode\menu.c</name>
@@ -1074,9 +1052,6 @@
       <name>$PROJ_DIR$\..\UserCode\stm32f4xx_it.c</name>
     </file>
   </group>
-  <file>
-    <name>$PROJ_DIR$\..\UserCode\app.c</name>
-  </file>
 </project>
 
 

@@ -1,4 +1,5 @@
 #include "LCD12864P.h"
+#include "stm32f4xx_hal_gpio.h"
 /****************************************
               Your header
 ***************************************/
@@ -11,15 +12,15 @@
 /**************************************
               Transplantation
 **************************************/
-#define cyCS_High() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_4,1)
-#define cyCS_Low() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_4,0)
+#define cyCS_High() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_4,GPIO_PIN_SET)
+#define cyCS_Low() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_4,GPIO_PIN_RESET)
 
 
-#define cySID_High() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_5,1)
-#define cySID_Low()  HAL_GPIO_WritePin (GPIOB, GPIO_PIN_5,0)
+#define cySID_High() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_5,GPIO_PIN_SET)
+#define cySID_Low()  HAL_GPIO_WritePin (GPIOB, GPIO_PIN_5,GPIO_PIN_RESET)
 
-#define cyCLK_High() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_3,1)
-#define cyCLK_Low() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_3,0)
+#define cyCLK_High() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_3,GPIO_PIN_SET)
+#define cyCLK_Low() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_3,GPIO_PIN_RESET)
 
 #define cyCS_Input()  User_GPIOInit(GPIOB,4,GPIO_MODE_INPUT,FAST,PULLUP)
 #define cySID_Input() User_GPIOInit(GPIOB,5,GPIO_MODE_INPUT,FAST,PULLUP)
@@ -41,6 +42,19 @@ do{\
 #else
 #define delay_1ms() delay_1ms_pro()
 #define delay_nms(n) delay_nms_pro(n)
+
+static void delay_1ms_pro()
+{
+        uint i;
+        for(i=0;i<1140;i++);
+}
+
+static void delay_nms_pro(uint n)
+{
+    uint i = 0;
+    for(i = n;i > 0;i--)
+        delay_1ms();
+}
 #endif
 
 /***********************************************
@@ -51,66 +65,47 @@ void Send(uchar type,uchar transdata);
 static void lcd_pos(uchar x,uchar y)//定位
 {
          uchar pos;
-
          switch(x)
           {
-            case 1:pos=0x80;break;
-            case 2:pos=0x90;break;
-            case 3:pos=0x88;break;
-            case 4:pos=0x98;break;
+            case 0:pos=0x80;break;
+            case 1:pos=0x90;break;
+            case 2:pos=0x88;break;
+            case 3:pos=0x98;break;
           }
           pos += y;
           Send(0,pos);
 }
 
-void User_printf (uchar x, uchar y, const char *fmt,...)
+void User_printf (uchar x, uchar y,uchar align, const char *fmt,...)
 {
         va_list args;
 	char  printbuffer[64 * 4];
         char *p = printbuffer;
 
-         x %= 5;
-        if (!x) x = 1;
+         x %= 4;
 
-        uint i;
         va_start (args, fmt);
 
         /* For this to work, printbuffer must be larger than
          * anything we ever want to print.
          */
-        i = vsprintf(printbuffer, fmt, args);
+        vsprintf(printbuffer, fmt, args);
         va_end (args);
 
         /* Print the string */
         lcd_pos(x,y);
         while(*p){
              Send(1,*(p++));
-             if ( 16== p - printbuffer )
-                 lcd_pos(++x,0);
-             else if(32 == p - printbuffer)
-                 lcd_pos(++x,0);
-             else if (48 == p - printbuffer)
-                 lcd_pos(++x,0);
-             else if (64 == p - printbuffer)
-                 lcd_pos(++x,0);
+             if ( 16== p - printbuffer + y*2 ||
+                  32== p - printbuffer + y*2 ||
+                  48== p - printbuffer + y*2 ||
+                  64== p - printbuffer + y*2)
+                 if (align)  lcd_pos(++x,y);
+                 else lcd_pos(++x,0);
         }
 
 }
 
-
-
-void delay_1ms_pro()
-{
-        uint i;
-        for(i=0;i<1140;i++);
-}
-
-void delay_nms_pro(uint n)
-{
-    uint i = 0;
-    for(i = n;i > 0;i--)
-        delay_1ms();
-}
 
 
 
@@ -118,20 +113,20 @@ void Init_Lcd(void)
 {
         IO_Init();
 
-        delay_nms(600);                 //延时等待液晶完成复位
+        delay_nms(1);                 //延时等待液晶完成复位
         Send(0,0x30);  /*功能设置:一次送8位数据,基本指令集*/
-        delay_nms(10);
+        delay_nms(1);
         Send(0,0x02);  /*DDRAM地址归位*/
-        delay_nms(5);
+        delay_nms(1);
         Send(0,0x0c);  /*显示设定:开显示,不显示光标,不做当前显示位反白闪动*/
-        delay_nms(5);
+        delay_nms(1);
         Send(0,0x01);  /*清屏，将DDRAM的位址计数器调整为“00H”*/
-        delay_nms(500);
+        delay_nms(1);
         Send(0,0x06);  /*功能设置，点设定:显示字符/光标从左到右移位,DDRAM地址加1*/
-        delay_nms(10);
+        delay_nms(1);
 }
 
-void Send(uchar type,uchar transdata)//0-写控制命令，1-写数据
+static void Send(uchar type,uchar transdata)//0-写控制命令，1-写数据
 {
         uchar firstbyte = 0xf8;
         uchar temp;
@@ -166,22 +161,10 @@ void Send(uchar type,uchar transdata)//0-写控制命令，1-写数据
 
 		cySID_Low();
 		cyCS_Low();
+
 }
 
 
-
-void Disp_HZ(const char * pt,uchar num)//显示汉字
-{
-    uchar i;
-           for(i = 0;i < (num*2);i++)
-           Send(1,*(pt++));
-}
-
-void Disp_SZ(uchar shuzi)//显示一个数字
-{
-	static uchar LCD_table[]={0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39};//0123456789
-    Send(1,LCD_table[shuzi]);
-}
 /*******************************************
 函数名称：Draw_PM
 功    能：在整个屏幕上画一个图片

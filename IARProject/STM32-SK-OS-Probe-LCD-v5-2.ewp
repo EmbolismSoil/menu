@@ -965,19 +965,16 @@
   <group>
     <name>APP</name>
     <file>
+      <name>$PROJ_DIR$\..\UserCode\app.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\UserCode\clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\UserCode\fifo.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\UserCode\fifo.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\UserCode\menu.c</name>
@@ -986,9 +983,6 @@
       <name>$PROJ_DIR$\..\UserCode\stm32f4xx_it.c</name>
     </file>
   </group>
-  <file>
-    <name>$PROJ_DIR$\..\UserCode\app.c</name>
-  </file>
 </project>
 
 

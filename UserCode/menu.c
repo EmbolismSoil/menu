@@ -4,6 +4,55 @@
 
 /*头指针，指向当前所在菜单条目*/
 static menu_t *head;
+static menu_t *lastHead;
+
+
+/*********************************************************************************************************
+*                                          Menu_Updata
+*
+* Description : 菜单刷新函数，刷新时输出菜单缓冲区内容或者子菜单列表
+*
+* Argument(s) : none
+*
+* Return(s)   : none.
+*
+* Caller(s)   : Menu_Back Menu_Enter
+*
+* Note(s)     : none.
+*********************************************************************************************************/
+menu_t *Menu_Updata(void)
+{
+      printBuffer_t *tmpBuffer = head->Buffer;
+    unsigned char cnt = 0;
+
+  if (tmpBuffer){/*如果输出缓不为空，将其输出*/
+      if (head->Updata){
+          head->Updata(0,0,Align,CLEAR,NULL);/*clear*/
+          while(tmpBuffer)
+          {
+               if (tmpBuffer->opt == Dis)
+                   head->Updata(tmpBuffer->x,tmpBuffer->y,Align,Dis,tmpBuffer->printString);
+               tmpBuffer = tmpBuffer->Next;
+          }
+      }
+  }else{/*如果输出缓冲为空，那就输出子菜单的名字*/
+      menu_t *tmpMenu = head->subMenuList;
+      if (tmpMenu){
+          if (head->Updata){
+              head->Updata(0,0,Align,CLEAR,NULL);/*clear*/
+              while(tmpMenu){
+                  head->Updata(cnt,0,Align,Dis,tmpMenu->menuName);
+                  tmpMenu = tmpMenu->NextBrother;
+                  cnt++;
+              }
+          }
+      }
+
+  }
+
+  return head;
+}
+
 
  menu_t *Menu_CurMenu(void)
 {
@@ -12,31 +61,35 @@ static menu_t *head;
 
  menu_t* Menu_Enter(void)
 {
-  if (head->subMenuList){/*如果当前菜单下还有子菜单，那就调用updata来显示子菜单名字*/
-      if (head->Updata)
-          head->Updata->Func(head->Updata->Arg);
-      head = head->subMenuList;
-  }else{
-      actFuncAndArg_t *tmpAct = head->EnterActList;
-      while(tmpAct){/*如果当前菜单下没有子菜单，那就执行进入菜单时的动作,然后再执行updata*/
+  actFuncAndArg_t *tmpAct = head->EnterActList;
+   while(tmpAct){/*首先執行進入動作*/
           tmpAct->Func(head->EnterActList->Arg);
           tmpAct = tmpAct->NextFunc;
-          head->Updata->Func(head->Updata->Arg);
       }
+
+  Menu_Updata();
+  if (head->subMenuList){
+      lastHead = head;
+      head = head->subMenuList;
   }
-  
+
   return head;
 }
 
  menu_t* Menu_Back(void)
 {
-  head = head->Parent;
-  if (head->BackActList)
-    while(head->BackActList)
-        head->BackActList->Func(head->BackActList->Arg);
-  if (head->Updata)
-    head->Updata->Func(head->Updata->Arg);
-  
+   if (lastHead)
+      head = lastHead->Parent;
+   else return NULL;
+
+   actFuncAndArg_t *tmpAct = head->BackActList;
+   while(tmpAct){/*首先执行退出动作*/
+          tmpAct->Func(head->BackActList->Arg);
+          tmpAct = tmpAct->NextFunc;
+      }
+
+   Menu_Updata();
+  head = lastHead;
   return head;
 }
 
@@ -45,18 +98,22 @@ static menu_t *head;
 {
   if (!head->NextBrother)
     return NULL;
-  else
+  else{
+      lastHead = head;
       head = head->NextBrother;
-    return head;
+  }
+      return head;
 }
 
  menu_t* Menu_Pre(void)
 {
     if (!head->PreBrother)
         return NULL;
-    else
+    else{
         head = head->PreBrother;
-    return head;
+        lastHead = head;
+    }
+     return head;
 }
 
 menu_t *Menu_Del(menu_t *srcMenu)
@@ -71,7 +128,7 @@ menu_t *Menu_Del(menu_t *srcMenu)
     }else if (!srcMenu->NextBrother && srcMenu->PreBrother){
         srcMenu->PreBrother->NextBrother = NULL;
     };
-    
+
     return srcMenu;
 }
 
@@ -80,11 +137,13 @@ menu_t *Menu_Del(menu_t *srcMenu)
     menu_t *tmpMenu;
     if ((!dstMenu) || (!srcMenu))
         return NULL;
-    
+
     Menu_Del(srcMenu);
-    
-    if (!dstMenu->NextBrother)
+
+    if (!dstMenu->NextBrother){
         dstMenu->NextBrother = srcMenu;
+        srcMenu->PreBrother = dstMenu;
+    }
     else{
         tmpMenu = dstMenu->NextBrother;
         dstMenu->NextBrother = srcMenu;
@@ -92,19 +151,19 @@ menu_t *Menu_Del(menu_t *srcMenu)
         dstMenu->NextBrother = tmpMenu;
         tmpMenu->PreBrother = dstMenu;
     }
-    
+
     return srcMenu;
 }
 
  menu_t* Menu_AddBrotherBefore(menu_t *dstMenu, menu_t *srcMenu)
 {
     menu_t *tmpMenu;
-    
+
     if ((!dstMenu) || (!srcMenu))
         return NULL;
-    
+
      Menu_Del(srcMenu);
-    
+
     if (!dstMenu->PreBrother)
         dstMenu->PreBrother = srcMenu;
     else{
@@ -114,14 +173,14 @@ menu_t *Menu_Del(menu_t *srcMenu)
         dstMenu->PreBrother = tmpMenu;
         tmpMenu->NextBrother = srcMenu;
     }
-    
+
     return srcMenu;
 }
 
  menu_t* Menu_HeadInit(menu_t* root)
 {
    if (!root) return NULL;
-   
+
    head = root;
    return head;
 }
@@ -129,18 +188,19 @@ menu_t *Menu_Del(menu_t *srcMenu)
 menu_t* Menu_AddSubMenuTail(menu_t* Parent, menu_t* Sub)
 {
     if (!Sub) return NULL;
-    
+
     Menu_Del(Sub);
-     
+
     menu_t *tmpMenu = Parent->subMenuList;
- 
-    while(tmpMenu)
-      tmpMenu = tmpMenu->subMenuList->NextBrother;
- 
+
+    if (tmpMenu)
+        while(tmpMenu->NextBrother)
+           tmpMenu = tmpMenu->NextBrother;
+
     if (tmpMenu)
        Menu_AddBrotherAfter(tmpMenu,Sub);
     else Parent->subMenuList = Sub;
-    
+
     Sub->Parent = Parent;
     return Sub;
 }
@@ -148,40 +208,42 @@ menu_t* Menu_AddSubMenuTail(menu_t* Parent, menu_t* Sub)
 menu_t* Menu_AddSubMenuHead(menu_t* Parent, menu_t* Sub)
 {
     if (!Sub) return NULL;
-    
+
     Menu_Del(Sub);
-    
+
     if (!Parent->subMenuList){
         Parent->subMenuList = Sub;
         return Sub;
     }
-    
+
     Parent->subMenuList->PreBrother = Sub;
     Sub->NextBrother = Parent->subMenuList;
     return Sub;
 }
 
-menu_t* Menu_NewMenu(char *menuString, menu_t* Parent,
+menu_t* Menu_NewMenu(char *menuString, ID_t ID, menu_t* Parent,
                      actFuncAndArg_t *EnterActList,
                       actFuncAndArg_t *BackActList,
-                      actFuncAndArg_t *Updata)
+                      updataFunc_t Updata,printBuffer_t *bufferList)
 {
     menu_t *menu = (menu_t*)malloc(sizeof(menu_t));
-    
+
     if (menu){
-        memset(menu,0,sizeof(menu_t)*2);
+        memset(menu,0,sizeof(menu_t));
         menu->NextBrother = NULL;
         menu->PreBrother = NULL;
         menu->Parent = NULL;
         menu->subMenuList = NULL;
-        menu->IDNum = -1;
+        menu->IDNum = ID;
         menu->pri = NULL;
         menu->Updata = NULL;
-        
+
         if (!menuString)
             return NULL;
         else{
             menu->menuName = menuString;
+            if (bufferList)
+                menu->Buffer = bufferList;
             if (EnterActList)
               menu->EnterActList = EnterActList;
             if (BackActList)
@@ -196,9 +258,9 @@ menu_t* Menu_NewMenu(char *menuString, menu_t* Parent,
             else
               head = menu;
         }
-        
+
         return menu;
     }
-    
+
     return NULL;
 }

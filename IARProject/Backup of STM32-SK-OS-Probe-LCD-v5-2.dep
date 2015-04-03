@@ -6,148 +6,83 @@
   <configuration>
     <name>Flash</name>
     <outputs>
-      <file>$PROJ_DIR$\Flash\Obj\cpu_c.o</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_q.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_mem.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_tmr.c</file>
-      <file>$PROJ_DIR$\Flash\Exe\STM32-SK-OS-Probe-LCD-v5.out</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uC-LIB\lib_mem.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mbox.c</file>
-      <file>$PROJ_DIR$\Flash\Obj\app.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_cpu_a.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_task.c</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_task.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_tmr.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_q.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Ports\ARM-Cortex-M3\Generic\IAR\os_cpu_a.asm</file>
-      <file>$PROJ_DIR$\Flash\Obj\cpu_a.o</file>
-      <file>$PROJ_DIR$\Flash\Obj\lib_mem_a.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uC-CPU\ARM-Cortex-M3\IAR\cpu_c.c</file>
-      <file>$PROJ_DIR$\..\BSP\startup_stm32f401xe.s</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_time.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_core.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_mutex.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uC-LIB\Ports\ARM-Cortex-M3\IAR\lib_mem_a.asm</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_task.o</file>
       <file>$PROJ_DIR$\app.c</file>
+      <file>$PROJ_DIR$\..\BSP\startup_stm32f401xe.s</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_mutex.o</file>
       <file>$PROJ_DIR$\Flash\Obj\lib_str.o</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_mbox.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_flag.c</file>
-      <file>$PROJ_DIR$\Flash\Obj\lib_mem.o</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_cpu_c.o</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_mutex.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\startup_stm32f401xe.o</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_sem.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uC-LIB\lib_str.c</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_tmr.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_mbox.o</file>
       <file>$PROJ_DIR$\Flash\Obj\os_flag.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mem.c</file>
-      <file>$PROJ_DIR$\Flash\Obj\lib_str.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_dbg.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mutex.c</file>
-      <file>$PROJ_DIR$\Flash\Obj\app.o</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_time.o</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_dbg.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Ports\ARM-Cortex-M3\Generic\IAR\os_cpu_c.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_sem.c</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_sem.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_flag.o</file>
-      <file>$PROJ_DIR$\Flash\Obj\cpu_c.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\lib_mem.pbi</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_core.o</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_q.o</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_time.c</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Ports\ARM-Cortex-M3\Generic\IAR\os_dbg.c</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_mem.pbi</file>
-      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_core.c</file>
-      <file>$PROJ_DIR$\Flash\Obj\os_cpu_c.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_tmr.o</file>
       <file>$PROJ_DIR$\..\..\..\..\..\uC-CPU\ARM-Cortex-M3\IAR\cpu_a.asm</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uC-CPU\ARM-Cortex-M3\IAR\cpu_c.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uC-LIB\Ports\ARM-Cortex-M3\IAR\lib_mem_a.asm</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uC-LIB\lib_mem.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uC-LIB\lib_str.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Ports\ARM-Cortex-M3\Generic\IAR\os_cpu_a.asm</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Ports\ARM-Cortex-M3\Generic\IAR\os_cpu_c.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Ports\ARM-Cortex-M3\Generic\IAR\os_dbg.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_flag.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_core.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mbox.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mem.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mutex.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_q.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_sem.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_task.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_time.c</file>
+      <file>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_tmr.c</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_mem.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\cpu_c.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\lib_str.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_q.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\cpu_a.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_cpu_c.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\cpu_c.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\app.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\lib_mem_a.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_q.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_flag.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_mbox.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_mutex.pbi</file>
+      <file>$PROJ_DIR$\Flash\Exe\STM32-SK-OS-Probe-LCD-v5.out</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_task.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_time.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_cpu_c.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_core.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_mem.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_sem.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\startup_stm32f401xe.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_core.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_mbox.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_dbg.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_sem.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_tmr.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\lib_mem.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\lib_mem.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_task.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_cpu_a.o</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_dbg.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\app.pbi</file>
+      <file>$PROJ_DIR$\Flash\Obj\os_time.o</file>
     </outputs>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_tmr.c</name>
+      <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 11</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 33</file>
+          <name>ILINK</name>
+          <file> 37</file>
         </tool>
       </outputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uC-LIB\lib_mem.c</name>
+      <name>$PROJ_DIR$\app.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 27</file>
+          <file> 31</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 48</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mbox.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 34</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 25</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_task.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 22</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 10</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_q.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 50</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 1</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Ports\ARM-Cortex-M3\Generic\IAR\os_cpu_a.asm</name>
-      <outputs>
-        <tool>
-          <name>AARM</name>
-          <file> 8</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uC-CPU\ARM-Cortex-M3\IAR\cpu_c.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 0</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 47</file>
+          <file> 55</file>
         </tool>
       </outputs>
     </file>
@@ -156,6 +91,28 @@
       <outputs>
         <tool>
           <name>AARM</name>
+          <file> 44</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\..\uC-CPU\ARM-Cortex-M3\IAR\cpu_a.asm</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 28</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\..\uC-CPU\ARM-Cortex-M3\IAR\cpu_c.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 25</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
           <file> 30</file>
         </tool>
       </outputs>
@@ -165,33 +122,20 @@
       <outputs>
         <tool>
           <name>AARM</name>
-          <file> 15</file>
+          <file> 32</file>
         </tool>
       </outputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\app.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\uC-LIB\lib_mem.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 40</file>
+          <file> 50</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 7</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_flag.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 46</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 35</file>
+          <file> 51</file>
         </tool>
       </outputs>
     </file>
@@ -200,37 +144,20 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 24</file>
+          <file> 3</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 37</file>
+          <file> 26</file>
         </tool>
       </outputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mem.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Ports\ARM-Cortex-M3\Generic\IAR\os_cpu_a.asm</name>
       <outputs>
         <tool>
-          <name>ICCARM</name>
-          <file> 2</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
+          <name>AARM</name>
           <file> 53</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mutex.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 20</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 29</file>
         </tool>
       </outputs>
     </file>
@@ -239,37 +166,11 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 28</file>
+          <file> 40</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 55</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_sem.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 31</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 45</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_time.c</name>
-      <outputs>
-        <tool>
-          <name>ICCARM</name>
-          <file> 41</file>
-        </tool>
-        <tool>
-          <name>BICOMP</name>
-          <file> 18</file>
+          <file> 29</file>
         </tool>
       </outputs>
     </file>
@@ -278,11 +179,24 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 42</file>
+          <file> 47</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 38</file>
+          <file> 54</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_flag.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 34</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 4</file>
         </tool>
       </outputs>
     </file>
@@ -291,29 +205,115 @@
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 49</file>
+          <file> 41</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 19</file>
+          <file> 45</file>
         </tool>
       </outputs>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\..\uC-CPU\ARM-Cortex-M3\IAR\cpu_a.asm</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mbox.c</name>
       <outputs>
         <tool>
-          <name>AARM</name>
-          <file> 14</file>
+          <name>ICCARM</name>
+          <file> 35</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 46</file>
         </tool>
       </outputs>
     </file>
     <file>
-      <name>[ROOT_NODE]</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mem.c</name>
       <outputs>
         <tool>
-          <name>ILINK</name>
-          <file> 4</file>
+          <name>ICCARM</name>
+          <file> 24</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 42</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_mutex.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 2</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 36</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_q.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 27</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 33</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_sem.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 48</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 43</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_task.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 52</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 38</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_time.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 56</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 39</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\..\uCOS-II\Source\os_tmr.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 49</file>
         </tool>
       </outputs>
     </file>
