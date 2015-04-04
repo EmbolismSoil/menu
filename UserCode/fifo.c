@@ -27,7 +27,7 @@ FIFO_Data_t FIFO_PopData(fifo_t *FIFO)
 	return FIFO->buf[FIFO->bottom];
 }
 
- fifo_t *FIFO_NewFifo(unsigned int cap)
+ fifo_t *FIFO_NewFIFO(unsigned int cap)
 {
     if (cap <= 0) return NULL;
 

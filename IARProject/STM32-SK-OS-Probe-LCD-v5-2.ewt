@@ -1040,7 +1040,10 @@
       <name>$PROJ_DIR$\..\UserCode\clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\UserCode\fifo.c</name>
+      <name>$PROJ_DIR$\..\UserCode\fifo_AllType.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\Key.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.c</name>

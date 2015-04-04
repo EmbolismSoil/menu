@@ -62,7 +62,7 @@
 *********************************************************************************************************
 */
 
-#define  APP_TASK_START_PRIO                               3
+#define  APP_TASK_START_PRIO                               0
 #define  APP_TASK_KBD_PRIO                                 4
 
 #define  APP_TASK_USER_IF_PRIO                            12

@@ -46,16 +46,16 @@ do{\
           HAL_NVIC_EnableIRQ(EXTI1_IRQn);\
           break;\
       case 2:\
-          HAL_NVIC_SetPriority(EXTI1_IRQn,PrmptPrio,SubPrio);\
-          HAL_NVIC_EnableIRQ(EXTI1_IRQn);\
+          HAL_NVIC_SetPriority(EXTI2_IRQn,PrmptPrio,SubPrio);\
+          HAL_NVIC_EnableIRQ(EXTI2_IRQn);\
           break;\
       case 3:\
-          HAL_NVIC_SetPriority(EXTI1_IRQn,PrmptPrio,SubPrio);\
-          HAL_NVIC_EnableIRQ(EXTI1_IRQn);\
+          HAL_NVIC_SetPriority(EXTI3_IRQn,PrmptPrio,SubPrio);\
+          HAL_NVIC_EnableIRQ(EXTI3_IRQn);\
           break;\
       case 4:\
-          HAL_NVIC_SetPriority(EXTI1_IRQn,PrmptPrio,SubPrio);\
-          HAL_NVIC_EnableIRQ(EXTI1_IRQn);\
+          HAL_NVIC_SetPriority(EXTI4_IRQn,PrmptPrio,SubPrio);\
+          HAL_NVIC_EnableIRQ(EXTI4_IRQn);\
           break;\
       default:\
           break;\

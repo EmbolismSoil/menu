@@ -78,8 +78,8 @@ D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\CMSIS\Include
 -DUSE_STM32F4XX_NUCLEO=1
 -DARM_MATH_CM4=1
 -D__CHAR_BITS__=8
--D__CHAR_MAX__=0xff
--D__CHAR_MIN__=0
+-D__CHAR_MAX__=127
+-D__CHAR_MIN__=(-__CHAR_MAX__-1)
 -D__CHAR_SIZE__=1
 -D__UNSIGNED_CHAR_MAX__=0xff
 -D__SIGNED_CHAR_MAX__=127
@@ -289,6 +289,7 @@ D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\CMSIS\Include
 -D__HAS_LOCATED_DECLARATION__=1
 -D__HAS_LOCATED_WITH_INIT__=1
 -D__IAR_COMPILERBASE__=594434
+-D__SIGNED_CHARS__=1
 -D__STDC__=1
 -D__STDC_VERSION__=199901L
 -D__STDC_HOSTED__=1

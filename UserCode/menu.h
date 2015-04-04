@@ -12,7 +12,9 @@ typedef struct __printBuffer printBuffer_t;
 typedef enum{CLEAR = 0,Dis,NODis,focus,unfocus}Menu_Opt_t;
 
 typedef void *(*actFunc_t)(void *);
-typedef void (*updataFunc_t)(unsigned char, unsigned char,unsigned char ,Menu_Opt_t, char *);
+typedef void (*updataFunc_t)(unsigned char, unsigned char,
+                             unsigned char ,Menu_Opt_t, char *);
+
 typedef unsigned short ID_t;
 
 struct __actFuncAndArg
@@ -25,13 +27,17 @@ struct __actFuncAndArg
 struct __printBuffer
 {
     char *printString;
-    Menu_Opt_t opt;
+    Menu_Opt_t opt;/*选择Dis / nodis 显示或者不显示*/
     unsigned char x;
     unsigned char y;
     printBuffer_t *Next;
 };
 
-
+typedef struct
+{
+    char line;
+    char row;
+}Menu_coord;
 /********************************************************
               输出缓冲列表和函数链表
 ********************************************************/
@@ -62,9 +68,11 @@ typedef struct __menu
   struct __menu *PreBrother;
   /*指向下一个兄弟菜单*/
   struct __menu *NextBrother;
+  /*是否需要显示光标*/
   Menu_Opt_t Focus;
   /*显示缓冲区*/
   printBuffer_t *Buffer;
+  Menu_coord coord;
   /*留给用户自行使用的私有数据指针*/
   void *pri;
 }menu_t;
@@ -79,10 +87,11 @@ extern menu_t* Menu_Pre(void);
 extern menu_t* Menu_AddBrotherAfter(menu_t *dstMenu, menu_t *srcMenu);
 extern menu_t* Menu_AddBrotherBefore(menu_t *dstMenu, menu_t *srcMenu);
 extern menu_t* Menu_HeadInit(menu_t* root);
-extern menu_t* Menu_NewMenu(char *menuString, ID_t ID,menu_t* Parent,
-                     actFuncAndArg_t *EnteractList,
+extern menu_t* Menu_NewMenu(char *menuString, char line,char row,ID_t ID, menu_t* Parent,
+                     actFuncAndArg_t *EnterActList,
                       actFuncAndArg_t *BackActList,
                       updataFunc_t Updata,printBuffer_t *bufferList);
 extern menu_t *Menu_Updata(void);
+extern Menu_coord Menu_CursorCood(void);
 
 #endif
