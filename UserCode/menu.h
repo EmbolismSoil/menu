@@ -44,7 +44,7 @@ typedef struct
 #define Menu_GenPrintBufferList(String,Opt,x,y,Next) \
         (struct __printBuffer []){{String,Opt,x,y,Next}}
 #define Menu_GenActList(Func,Arg,Next) \
-        (struct actFuncAndArg_t []){{Func,Arg,Next}}
+        (struct __actFuncAndArg []){{Func,Arg,Next}}
 
 
 typedef struct __menu
@@ -93,5 +93,7 @@ extern menu_t* Menu_NewMenu(char *menuString, char line,char row,ID_t ID, menu_t
                       updataFunc_t Updata,printBuffer_t *bufferList);
 extern menu_t *Menu_Updata(void);
 extern Menu_coord Menu_CursorCood(void);
+extern void Menu_cursorON(void);
+extern  void Menu_cursorOFF(void);
 
 #endif

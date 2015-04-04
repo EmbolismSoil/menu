@@ -16,7 +16,7 @@
 #include "Key.h"
 
 #define Menu_Manager_Prio 3
-#define Key_Manager_Prio 6
+#define Key_Manager_Prio 8
 
 #define KEY_RESOLVE(key) \
 do{\
@@ -24,23 +24,15 @@ do{\
             {\
                 case ENTER:\
                     Menu_Enter();\
-                     User_printf (Line , 0,Align,"  ");\
-                    User_printf (Line = Menu_CurMenu()->coord.line, 0,Align,"->");\
                     break;\
                 case BACK:\
                     Menu_Back();\
-                     User_printf (Line, 0,Align,"  ");\
-                    User_printf (Line = Menu_CurMenu()->coord.line, 0,Align,"->");\
                     break;\
                 case NEXT:\
                     Menu_Next();\
-                     User_printf (Line, 0,Align,"  ");\
-                    User_printf (Line = Menu_CurMenu()->coord.line, 0,Align,"->");\
                      break;\
                 case PRE:\
                     Menu_Pre();\
-                     User_printf (Line, 0,Align,"  ");\
-                    User_printf (Line = Menu_CurMenu()->coord.line, 0,Align,"->");\
                     break;\
             }\
 }while(0)
@@ -53,8 +45,19 @@ static  void  App_TaskStart (void        *p_arg);
 static void App_MenuManger(void *parg);
 static void App_KeyManager(void *p_arg);
 
+void *inFunc(void* p)
+{
+   p = p;
+   Menu_cursorOFF();
+   return NULL;
+}
 
-
+void *outFunc(void *p)
+{
+    p = p;
+    Menu_cursorON();
+    return NULL;
+}
 
 static void Updata(unsigned char x, unsigned char y,uchar align, Menu_Opt_t opt, char *printString)
 {
@@ -79,13 +82,14 @@ static void Updata(unsigned char x, unsigned char y,uchar align, Menu_Opt_t opt,
 fifo_t *FIFO;
 
 printBuffer_t *bp = Menu_GenPrintBufferList("mesure 10kHZ....",Dis,0,0,Menu_GenPrintBufferList("0KHZ",Dis,2,0,NULL));
-
+actFuncAndArg_t *pIN = Menu_GenActList(inFunc,NULL,NULL);
+actFuncAndArg_t *pOUT = Menu_GenActList(outFunc,NULL,NULL);
 int Line = 0;
 int  main (void)
 {
 
       HAL_Init();
-      SystemClock_Config_168M();
+      SystemClock_Config_84M();
       FIFO = FIFO_NewFIFO(100);
 
       menu_t *mainMenu = Menu_NewMenu("Root",0,0,0,NULL,NULL,NULL,Updata,NULL);
@@ -110,8 +114,8 @@ int  main (void)
                      NULL,
                      Updata,NULL);
       menu_t *_10KHZ = Menu_NewMenu("1 10KHZ",0,1, 5, freMenu,
-                     NULL,
-                     NULL,
+                     pIN,
+                     pOUT,
                      Updata,bp);
       menu_t *_20KHZ = Menu_NewMenu("2 20KHZ",1,1,6, freMenu,NULL,NULL,Updata,NULL);
 

@@ -153,8 +153,8 @@ static void Send(uchar type,uchar transdata)//0-写控制命令，1-写数据
 						cyCLK_Low();
                 }
                 //三个字节之间一定要有足够的延时，否则易出现时序问题
-                if(j == 3)        delay_nms(3);
-                else               delay_nms(3);
+                if(j == 3)        delay_nms(1);
+                else               delay_nms(1);
 
                 j--;
         }

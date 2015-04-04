@@ -5,8 +5,26 @@
 /*头指针，指向当前所在菜单条目*/
 static menu_t *head = NULL;
 static menu_t *lastHead = NULL;
+static int  cursorON = 1;
+static Menu_coord curcorCoord = {.line = 0,.row = 0};
 
+void Menu_cursorON(void)
+{
+   cursorON = 1;
+}
+void Menu_cursorOFF(void)
+{
+   cursorON = 0;
+}
 
+void Menu_cursorUpdata(void)
+{
+        if (  cursorON&& head->coord.row > 0){
+            head->Updata(curcorCoord.line,0,Align,Dis," ");
+            curcorCoord.line = head->coord.line;
+            head->Updata(head->coord.line,0,Align,Dis,"*");
+        }
+}
 /*********************************************************************************************************
 *                                          Menu_Updata
 *
@@ -98,6 +116,7 @@ menu_t*  Menu_Enter(void)
       head = head->subMenuList;
   }
 
+  Menu_cursorUpdata();
   return head;
 }
 
@@ -130,6 +149,7 @@ menu_t* Menu_Back(void)
    head = lastHead;
    lastHead = head->Parent;
 
+  Menu_cursorUpdata();
   return head;
 
 }
@@ -159,6 +179,7 @@ menu_t* Menu_Next(void)
   else
       head = head->NextBrother;
 
+  Menu_cursorUpdata();
   return head;
 }
 
@@ -183,6 +204,8 @@ menu_t* Menu_Next(void)
     }
     else
         head = head->PreBrother;
+
+    Menu_cursorUpdata();
      return head;
 }
 
