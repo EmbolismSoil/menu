@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    Templates/Inc/stm32f4xx_it.h 
+  * @file    Templates/Inc/stm32f4xx_it.h
   * @author  MCD Application Team
   * @version V1.1.0
   * @date    26-June-2014
@@ -41,7 +41,7 @@
 
 #ifdef __cplusplus
  extern "C" {
-#endif 
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
@@ -58,6 +58,7 @@ void SVC_Handler(void);
 void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
+void TIM1_UP_TIM10_IRQHandler(void);
 
 #ifdef __cplusplus
 }

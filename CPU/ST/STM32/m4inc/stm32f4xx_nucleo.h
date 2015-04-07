@@ -1,13 +1,13 @@
-/** 
+/**
   ******************************************************************************
   * @file    stm32f4xx_nucleo.h
   * @author  MCD Application Team
   * @version V1.1.0
   * @date    19-June-2014
   * @brief   This file contains definitions for:
-  *          - LEDs and push-button available on STM32F4XX-Nucleo Kit 
+  *          - LEDs and push-button available on STM32F4XX-Nucleo Kit
   *            from STMicroelectronics
-  *          - LCD, joystick and microSD available on Adafruit 1.8" TFT LCD 
+  *          - LCD, joystick and microSD available on Adafruit 1.8" TFT LCD
   *            shield (reference ID 802)
   ******************************************************************************
   * @attention
@@ -36,9 +36,9 @@
   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
-  ******************************************************************************  
-  */ 
-  
+  ******************************************************************************
+  */
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F4XX_NUCLEO_H
 #define __STM32F4XX_NUCLEO_H
@@ -49,7 +49,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
-   
+
 /** @addtogroup BSP
   * @{
   */
@@ -60,29 +60,29 @@
 
 /** @addtogroup STM32F4XX_NUCLEO_LOW_LEVEL
   * @{
-  */ 
+  */
 
 /** @defgroup STM32F4XX_NUCLEO_LOW_LEVEL_Exported_Types
   * @{
   */
-typedef enum 
+typedef enum
 {
   LED2 = 0
 }Led_TypeDef;
 
-typedef enum 
-{  
+typedef enum
+{
   BUTTON_KEY = 0
 }Button_TypeDef;
 
-typedef enum 
-{  
+typedef enum
+{
   BUTTON_MODE_GPIO = 0,
   BUTTON_MODE_EXTI = 1
 }ButtonMode_TypeDef;
 
-typedef enum 
-{ 
+typedef enum
+{
   JOY_NONE  = 0,
   JOY_SEL   = 1,
   JOY_DOWN  = 2,
@@ -93,15 +93,15 @@ typedef enum
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup STM32F4XX_NUCLEO_LOW_LEVEL_Exported_Constants
   * @{
-  */ 
+  */
 
-/** 
-  * @brief Define for STM32F4XX_NUCLEO board  
-  */ 
+/**
+  * @brief Define for STM32F4XX_NUCLEO board
+  */
 #if !defined (USE_STM32F4XX_NUCLEO)
  #define USE_STM32F4XX_NUCLEO
 #endif
@@ -114,18 +114,18 @@ typedef enum
 #define LED2_PIN                                GPIO_PIN_5
 #define LED2_GPIO_PORT                          GPIOA
 #define LED2_GPIO_CLK_ENABLE()                  __GPIOA_CLK_ENABLE()
-#define LED2_GPIO_CLK_DISABLE()                 __GPIOA_CLK_DISABLE()  
+#define LED2_GPIO_CLK_DISABLE()                 __GPIOA_CLK_DISABLE()
 
 #define LEDx_GPIO_CLK_ENABLE(__INDEX__)   (((__INDEX__) == 0) ? LED2_GPIO_CLK_ENABLE() : 0)
 #define LEDx_GPIO_CLK_DISABLE(__INDEX__)  (((__INDEX__) == 0) ? LED2_GPIO_CLK_DISABLE() : 0)
 /**
   * @}
-  */ 
-  
+  */
+
 /** @addtogroup STM32F4XX_NUCLEO_LOW_LEVEL_BUTTON
   * @{
-  */  
-#define BUTTONn                                 1  
+  */
+#define BUTTONn                                 1
 
 /**
  * @brief Key push-button
@@ -140,7 +140,7 @@ typedef enum
 #define BUTTONx_GPIO_CLK_DISABLE(__INDEX__)  (((__INDEX__) == 0) ? KEY_BUTTON_GPIO_CLK_DISABLE() : 0)
 /**
   * @}
-  */ 
+  */
 
 /** @addtogroup STM32F4XX_NUCLEO_LOW_LEVEL_BUS
   * @{
@@ -165,7 +165,7 @@ typedef enum
    on accurate values, they just guarantee that the application will not remain
    stuck if the SPI communication is corrupted.
    You may modify these timeout values depending on CPU frequency and application
-   conditions (interrupts routines ...). */   
+   conditions (interrupts routines ...). */
 #define NUCLEO_SPIx_TIMEOUT_MAX                   1000
 
 /**
@@ -181,7 +181,7 @@ typedef enum
 #define LCD_CS_HIGH()     HAL_GPIO_WritePin(LCD_CS_GPIO_PORT, LCD_CS_PIN, GPIO_PIN_SET)
 #define LCD_DC_LOW()      HAL_GPIO_WritePin(LCD_DC_GPIO_PORT, LCD_DC_PIN, GPIO_PIN_RESET)
 #define LCD_DC_HIGH()     HAL_GPIO_WritePin(LCD_DC_GPIO_PORT, LCD_DC_PIN, GPIO_PIN_SET)
-     
+
 /**
   * @brief  SD Control Interface pins
   */
@@ -197,7 +197,7 @@ typedef enum
 #define LCD_CS_GPIO_PORT                           GPIOB
 #define LCD_CS_GPIO_CLK_ENABLE()                 __GPIOB_CLK_ENABLE()
 #define LCD_CS_GPIO_CLK_DISABLE()                __GPIOB_CLK_DISABLE()
-    
+
 /**
   * @brief  LCD Data/Command Interface pins
   */
@@ -215,7 +215,7 @@ typedef enum
 #define NUCLEO_ADCx_CLK_ENABLE()                  __ADC1_CLK_ENABLE()
 
 #define NUCLEO_ADCx_CHANNEL                       ADC_CHANNEL_8
-   
+
 #define NUCLEO_ADCx_GPIO_PORT                       GPIOB
 #define NUCLEO_ADCx_GPIO_PIN                        GPIO_PIN_0
 #define NUCLEO_ADCx_GPIO_CLK_ENABLE()             __GPIOB_CLK_ENABLE()
@@ -230,15 +230,15 @@ typedef enum
 
 /** @defgroup STM32F4XX_NUCLEO_LOW_LEVEL_Exported_Macros
   * @{
-  */  
+  */
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup STM32F4XX_NUCLEO_LOW_LEVEL_Exported_Functions
   * @{
   */
-uint32_t         BSP_GetVersion(void);  
+uint32_t         BSP_GetVersion(void);
 void             BSP_LED_Init(Led_TypeDef Led);
 void             BSP_LED_On(Led_TypeDef Led);
 void             BSP_LED_Off(Led_TypeDef Led);
@@ -247,14 +247,14 @@ void             BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef ButtonMod
 uint32_t         BSP_PB_GetState(Button_TypeDef Button);
 uint8_t          BSP_JOY_Init(void);
 JOYState_TypeDef BSP_JOY_GetState(void);
-  
-/**
-  * @}
-  */ 
 
 /**
   * @}
-  */ 
+  */
+
+/**
+  * @}
+  */
 
 /**
   * @}

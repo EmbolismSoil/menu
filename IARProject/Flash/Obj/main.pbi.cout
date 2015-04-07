@@ -1,4 +1,4 @@
-"E:\电赛\训练\软件\userProj\UserCode\app.c"
+"E:\电赛\训练\软件\TestProj\UserCode\main.c"
 -std=c99
 -ferror-limit=100
 -I
@@ -213,7 +213,7 @@ D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\CMSIS\Include
 -D__UINTPTR_T_MAX__=0xffffffffUL
 -D__INTPTR_SIZE_PREFIX__="l"
 -D__JMP_BUF_ELEMENT_TYPE__=unsigned long long int
--D__JMP_BUF_NUM_ELEMENTS__=8
+-D__JMP_BUF_NUM_ELEMENTS__=16
 -D__TID__=0xcf60
 -D__VER__=7040001
 -D__BUILD_NUMBER__=8447
@@ -254,7 +254,7 @@ D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\CMSIS\Include
 -D__DEF_HEAP_MEM__=__data
 -D__PRAGMA_PACK_ON__=1
 -D__MULTIPLE_INHERITANCE__=1
--D__AAPCS__=1
+-D__AAPCS_VFP__=1
 -D__ARM4TM__=4
 -D__ARM5TM__=5
 -D__ARM5T__=5
@@ -266,6 +266,16 @@ D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\CMSIS\Include
 -D__ARM6__=6
 -D__ARM7EM__=13
 -D__ARM7__=7
+-D__ARMVFPV1__=1
+-D__ARMVFPV2__=2
+-D__ARMVFPV3_D16__=1
+-D__ARMVFPV3_FP16__=1
+-D__ARMVFPV3__=3
+-D__ARMVFPV4__=4
+-D__ARMVFP_D16__=1
+-D__ARMVFP_FP16__=1
+-D__ARMVFP_SP__=1
+-D__ARMVFP__=__ARMVFPV4__
 -D__ARM_MEDIA__=1
 -D__ARM_PROFILE_M__=1
 -D__CORE__=__ARM7EM__

@@ -79,7 +79,7 @@ static void lcd_pos(uchar x,uchar y)//¶¨Î»
 void User_printf (uchar x, uchar y,uchar align, const char *fmt,...)
 {
         va_list args;
-	char  printbuffer[64 * 4];
+	char  printbuffer[400];
         char *p = printbuffer;
 
          x %= 4;

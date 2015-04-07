@@ -48,11 +48,11 @@
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>Full formatting.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -61,7 +61,7 @@
         <option>
           <name>FPU</name>
           <version>4</version>
-          <state>6</state>
+          <state>0</state>
         </option>
         <option>
           <name>OGCoreOrChip</name>
@@ -231,7 +231,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>10010100</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -334,7 +334,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -343,7 +343,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -602,7 +602,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>2</version>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -610,7 +610,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>STM32-SK-OS-Probe-LCD-v5-2.srec</state>
+          <state>STM32-SK-OS-Probe-LCD-v5-2.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -618,7 +618,7 @@
         </option>
         <option>
           <name>OOCObjCopyEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -778,7 +778,7 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$\..\StaticLib\stm32f401DriverLib.a</state>
-          <state>$PROJ_DIR$\..\StaticLib\ucosii.a</state>
+          <state>$PROJ_DIR$\..\StaticLib\ucosii-1kticks.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -968,22 +968,34 @@
       <name>$PROJ_DIR$\..\UserCode\app.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\UserCode\clock.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\UserCode\fifo_AllType.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\UserCode\Key.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\UserCode\menu.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\UserCode\QuickSort.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\UserCode\stm32f4xx_it.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\timer_Base.c</name>
+    </file>
+  </group>
+  <group>
+    <name>USERDRIVER</name>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\userdriver\LCD12864P.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\UserCode\timer_IC.c</name>
     </file>
   </group>
 </project>

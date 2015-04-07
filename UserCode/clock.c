@@ -1,5 +1,5 @@
-#include "stm32f4xx_hal.h"
-#include "stm32f4xx_nucleo.h"
+#include "clock.h"
+
 
 /**
   * @brief  This function is executed in case of error occurrence.
@@ -127,9 +127,9 @@ void SystemClock_Config_168M(void)
      clocks dividers */
   RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;/* π”√PLL ±÷”*/
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV2;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV2;/*AHB = 84M*/
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;/*ABP1 = 84 / 4 = 42M*/
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;/*ABP2 = 84 / 4 = 42M*/
 
   if(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {

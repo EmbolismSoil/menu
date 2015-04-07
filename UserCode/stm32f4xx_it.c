@@ -37,9 +37,12 @@
   ******************************************************************************
   */
 
+
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f4xx_it.h"
+#include "timer_IC.h"
+#include "timer_Base.h"
 
 /** @addtogroup STM32F4xx_HAL_Examples
   * @{
@@ -188,10 +191,25 @@ void EXTI3_IRQHandler(void)
 
 void EXTI9_5_IRQHandler(void)
 {
-
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_7);
 }
 
+
+
+void TIM1_CC_IRQHandler(void)
+{
+     HAL_TIM_IRQHandler( TIMIC_GetTimHandle());
+}
+
+void TIM1_UP_TIM10_IRQHandler(void)
+{
+     HAL_TIM_IRQHandler( TIMIC_GetTimHandle());
+}
+
+void TIM2_IRQHandler(void)
+{
+     HAL_TIM_IRQHandler( TIMBase_GetTimHandle());
+}
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
