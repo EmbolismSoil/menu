@@ -26,6 +26,7 @@
 *********************************************************************************************************/
 #define Menu_Manager_Prio 5
 #define Key_Manager_Prio 12
+#define Frequency_Prio  8
 
 #define KEY_RESOLVE(key) \
 do{\
@@ -52,13 +53,14 @@ do{\
 static  OS_STK          App_TaskStartStk[128];
 static  OS_STK          MenuManagerStk[200];
 static  OS_STK          KeyManagerStk[200];
+static  OS_STK          FrequencyStk[200];
+
 
 static double  Frequency;
 static double freAry[20];
-static int num = 0;
-static double tmpFre = 0;
 static int flag = 0;
 OS_EVENT *KeyBox;
+OS_EVENT *FreBox;
 
 /***********************************************************************************************
                                     Declaretion
@@ -66,11 +68,15 @@ OS_EVENT *KeyBox;
 static  void  App_TaskStart (void        *p_arg);
 static void App_MenuManger(void *parg);
 static void App_KeyManager(void *p_arg);
+static void App_Frequency(void *parg);
+static double tmpFre = 0;
 
 void *inFunc(void* p)
 {
    p = p;
    Menu_cursorOFF();
+   Menu_CurMenu()->Buffer->opt = Dis;
+   Menu_CurMenu()->Buffer->Next->opt = Dis;
    return NULL;
 }
 
@@ -78,6 +84,8 @@ void *outFunc(void *p)
 {
     p = p;
     Menu_cursorON();
+    Menu_CurMenu()->Buffer->opt = NODis;
+    Menu_CurMenu()->Buffer->Next->opt = NODis;
     return NULL;
 }
 
@@ -102,8 +110,9 @@ static void Updata(unsigned char x, unsigned char y,uchar align, Menu_Opt_t opt,
 *********************************************************************************************************
 */
 
-
-printBuffer_t *bp = Menu_GenPrintBufferList("mesure 10kHZ....",Dis,0,0,Menu_GenPrintBufferList("0KHZ",Dis,2,0,NULL));
+static char Frequency_Buf[35];
+printBuffer_t *bp = Menu_GenPrintBufferList("Frequency : ",NODis,0,0,
+                                  Menu_GenPrintBufferList(Frequency_Buf,NODis,1,0,NULL));
 actFuncAndArg_t *pIN = Menu_GenActList(inFunc,NULL,NULL);
 actFuncAndArg_t *pOUT = Menu_GenActList(outFunc,NULL,NULL);
 int Line = 0;
@@ -112,12 +121,11 @@ int  main (void)
 
       HAL_Init();
       SystemClock_Config_168M();
-      Timer_ICInit(TIM1,1,0xFFFF,0,0,UP,RISING,1);
-      TimerBaseInit(TIM2,(8400-1),0,2500-1 ,UP);
+
 
 
       menu_t *mainMenu = Menu_NewMenu("Root",0,0,0,NULL,NULL,NULL,Updata,NULL);
-      menu_t *freMenu = Menu_NewMenu("1 Frequency", 0,1,1, mainMenu,
+      menu_t *Signals = Menu_NewMenu("1 Signals ", 0,1,1, mainMenu,
                      NULL,
                      NULL,
                      Updata,NULL);
@@ -137,11 +145,11 @@ int  main (void)
                      NULL,
                      NULL,
                      Updata,NULL);
-      menu_t *_10KHZ = Menu_NewMenu("1 10KHZ",0,1, 5, freMenu,
+      Menu_NewMenu("1 Freq Measure",0,1, 5, Signals,
                      pIN,
                      pOUT,
                      Updata,bp);
-      menu_t *_20KHZ = Menu_NewMenu("2 20KHZ",1,1,6, freMenu,NULL,NULL,Updata,NULL);
+      Menu_NewMenu("2 Output",1,1,6, Signals,NULL,NULL,Updata,NULL);
 
 
     /* Disable all ints until we are ready to accept them.  */
@@ -176,10 +184,20 @@ int  main (void)
                              (INT32U          ) 200,
                              (void          * )0,
                              (INT16U          )(OS_TASK_OPT_STK_CLR | OS_TASK_OPT_STK_CHK));
+     OSTaskCreateExt((void (*)(void *)) App_Frequency,
+                             (void          * ) 0,
+                             (OS_STK        * )&FrequencyStk[200 - 1],
+                             (INT8U           ) Frequency_Prio,
+                             (INT16U          ) Frequency_Prio,
+                             (OS_STK        * )&FrequencyStk[0],
+                             (INT32U          ) 200,
+                             (void          * )0,
+                             (INT16U          )(OS_TASK_OPT_STK_CLR | OS_TASK_OPT_STK_CHK));
 
    /* Start multitasking (i.e. give control to uC/OS-II).  */
 
     KeyBox = OSMboxCreate(NULL);
+    FreBox = OSMboxCreate(NULL);
     OSStart();
 
     return (0);
@@ -205,6 +223,9 @@ static  void  App_TaskStart (void *p_arg)
     p_arg = p_arg;
     OS_CPU_SysTickInit();
     OSStatInit();
+    Timer_ICInit(TIM2,1,0xFFFF,0,0,UP,RISING,1);
+    TimerBaseInit(TIM1,(8400-1),0,2500 - 1 ,UP);
+
         while(1){
             OSTaskSuspend(APP_TASK_START_PRIO);
         }
@@ -229,10 +250,10 @@ static  void  App_TaskStart (void *p_arg)
 static void App_MenuManger(void *parg)
 {
     parg = parg;
-    User_GPIOEXTI(GPIOA,15,GPIO_MODE_IT_FALLING,FAST,PULLUP,5,5);
-    User_GPIOEXTI(GPIOB,7, GPIO_MODE_IT_FALLING,FAST,PULLUP,5,5);
-    User_GPIOEXTI(GPIOB,0, GPIO_MODE_IT_FALLING,FAST,PULLUP,5,5);
-    User_GPIOEXTI(GPIOC,2, GPIO_MODE_IT_FALLING,FAST,PULLUP,5,5);
+    User_GPIOEXTI(GPIOA,15,GPIO_MODE_IT_FALLING,FAST,PULLUP,5,1);
+    User_GPIOEXTI(GPIOB,7, GPIO_MODE_IT_FALLING,FAST,PULLUP,5,2);
+    User_GPIOEXTI(GPIOB,0, GPIO_MODE_IT_FALLING,FAST,PULLUP,5,3);
+    User_GPIOEXTI(GPIOC,2, GPIO_MODE_IT_FALLING,FAST,PULLUP,5,4);
 
     Init_Lcd();
     Menu_Enter();
@@ -270,25 +291,25 @@ static void App_KeyManager(void *parg)
     while(1){
          OSTaskSuspend(Key_Manager_Prio);
         if (!HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2)){
-            OSTimeDly(2);
+            OSTimeDly(10);
             if (!HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2)){
                  Key = PRE;
                  OSMboxPost(KeyBox,&Key);
              }
         }else if(!HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0)){
-              OSTimeDly(2);
+              OSTimeDly(10);
              if (!HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0)){
                     Key = NEXT;
                    OSMboxPost(KeyBox,&Key);
              }
         }else if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_15)){
-               OSTimeDly(2);
+               OSTimeDly(10);
              if (!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_15)){
                     Key = ENTER;
                     OSMboxPost(KeyBox,&Key);
              }
         }else if (!HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_7)){
-                OSTimeDly(2);
+                OSTimeDly(10);
               if (!HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_7)){
                     Key = BACK;
                    OSMboxPost(KeyBox,&Key);
@@ -299,27 +320,51 @@ static void App_KeyManager(void *parg)
 
 }
 
-
-void APP_Fre(void *parg)
+/*
+*********************************************************************************************************
+*                                          App_Frequency()
+*
+* Description : 频率测量进程 该进程只能被菜单条目Frequency唤醒，唤醒后即可读取消息邮箱取得中断发送的原始频率
+*
+* Argument(s) : p_arg       Argument passed to 'App_TaskStart()' by 'OSTaskCreate()'.
+*
+* Return(s)   : none.
+*
+* Caller(s)   : This is a task.
+*
+* Note(s)     : none.
+*********************************************************************************************************
+*/
+void App_Frequency(void *parg)
 {
-   //  static const  double p1 =   -9.16e-09;
-    //static const double p2 =       1.013;
-    //static const double p3 =      0.2876 ;
+/***********************************************
+                误差拟合系数
+************************************************
+     static const  double p1 =   -9.16e-09;
+     static const double p2 =       1.013;
+     static const double p3 =      0.2876 ;
+
+     static const double p1 =  -1.316e-05  ;
+     static const double p2 =       1.281  ;(1.254, 1.309)
+     static const double p3  =      -933.7 ; (-1208, -659.4)
+******************************************************/
+
 
     static const double a =       1.015 ;// (1.005, 1.025)
     static const double b =      0.9998  ;//(0.9988, 1.001)
     static const double c =     -0.4801 ;// (-5.049, 4.089)
-
-   //    static const double p1 =  -1.316e-05  ;
-   //    static const double p2 =       1.281  ;//(1.254, 1.309)
-   //    static const double p3  =      -933.7 ;// (-1208, -659.4)
-      while(1)
+     while(1)
+      {
+          OSTaskSuspend(Frequency_Prio);
         if (flag){
-                tmpFre *= 4;
-                tmpFre = a*pow(tmpFre,b) + c;
-                User_printf(0,0,Align,"%d ",(int)tmpFre);
-                flag = 0;
+          tmpFre *= 4;
+          tmpFre = a*pow(tmpFre,b) + c;
+          //User_printf(0,0,Align,"%d ",(int)(tmpFre));
+          sprintf(Frequency_Buf,"%d",(int)tmpFre);
+          Menu_RefreshBuffer();
+          flag = 0;
         }
+      }
 }
 
 
@@ -331,6 +376,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+   static int num = 0;
 
     if (num <= 19)
     {
@@ -339,15 +385,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
     }else{
        tmpFre = 0;
-    //   quickSort(freAry,6);
        QuickSort(freAry,0,19);
        for (num = 5;num <= 14;num++)
            tmpFre += freAry[num];
        tmpFre /= 10.0;
-       flag = 1;
        num = 0;
+       flag =  1;
     }
 
+    OSTaskResume(Frequency_Prio);
     Frequency = 0;
 }
 

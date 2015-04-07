@@ -95,5 +95,6 @@ extern menu_t *Menu_Updata(void);
 extern Menu_coord Menu_CursorCood(void);
 extern void Menu_cursorON(void);
 extern  void Menu_cursorOFF(void);
+extern menu_t* Menu_RefreshBuffer(void);
 
 #endif

@@ -69,6 +69,41 @@ menu_t* Menu_Updata(void)
 
 }
 
+/*********************************************************************************************************
+*                                          Menu_RefreshBuffer
+*
+* Description : 缓冲区刷新函数，如果用户改变了缓冲内容，应该适时调用这个函数进行刷新
+*
+* Argument(s) : none
+*
+* Return(s)   :
+*
+* Caller(s)   :
+*
+* Note(s)     : none.
+*********************************************************************************************************/
+menu_t* Menu_RefreshBuffer(void)
+{
+  char clearBit = 1;
+  printBuffer_t *tmpBuffer = head->Buffer;
+  if (tmpBuffer)/*如果输出缓不为空，将其输出*/
+      if (head->Updata){
+          while(tmpBuffer)
+          {
+              if (tmpBuffer->opt == Dis){
+                  if (clearBit){
+                       head->Updata(0,0,Align,CLEAR,NULL);/*clear*/
+                       clearBit = 0;
+                   }
+                   head->Updata(tmpBuffer->x,tmpBuffer->y,
+                                   Align,Dis,tmpBuffer->printString);
+                   tmpBuffer = tmpBuffer->Next;
+              }
+          }
+      }
+
+     return head;
+}
 
 /*********************************************************************************************************
 *                                          Menu_CurMenu

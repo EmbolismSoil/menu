@@ -67,7 +67,7 @@ void SystemClock_Config_84M(void)
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;/*使用PLL时钟*/
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
   if(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
@@ -129,7 +129,7 @@ void SystemClock_Config_168M(void)
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;/*使用PLL时钟*/
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV2;/*AHB = 84M*/
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;/*ABP1 = 84 / 4 = 42M*/
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;/*ABP2 = 84 / 4 = 42M*/
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;/*ABP2 = 84 / 4 = 42M*/
 
   if(HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {

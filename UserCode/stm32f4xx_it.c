@@ -203,12 +203,12 @@ void TIM1_CC_IRQHandler(void)
 
 void TIM1_UP_TIM10_IRQHandler(void)
 {
-     HAL_TIM_IRQHandler( TIMIC_GetTimHandle());
+     HAL_TIM_IRQHandler( TIMBase_GetTimHandle());
 }
 
 void TIM2_IRQHandler(void)
 {
-     HAL_TIM_IRQHandler( TIMBase_GetTimHandle());
+     HAL_TIM_IRQHandler( TIMIC_GetTimHandle());
 }
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
