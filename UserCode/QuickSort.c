@@ -1,6 +1,7 @@
 void QuickSort(double s[], int Left, int Right)
 {
-    int cntLeft, cntRight, ref;
+    int cntLeft, cntRight;
+    double ref;
     if (Left < Right)
     {
         cntLeft = Left;

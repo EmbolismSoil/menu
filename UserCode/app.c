@@ -19,7 +19,7 @@
 #include "QuickSort.h"
 #include <ucos_ii.h>
 #include <math.h>
-
+#include "fifo_ALLType.h"
 
 /********************************************************************************************************
                                             Defines
@@ -27,6 +27,7 @@
 #define Menu_Manager_Prio 5
 #define Key_Manager_Prio 12
 #define Frequency_Prio  8
+#define Duty_Prio 9
 
 #define KEY_RESOLVE(key) \
 do{\
@@ -54,14 +55,21 @@ static  OS_STK          App_TaskStartStk[128];
 static  OS_STK          MenuManagerStk[200];
 static  OS_STK          KeyManagerStk[200];
 static  OS_STK          FrequencyStk[200];
+static  OS_STK          DutySTK[200];
 
+ uint32_t            uwIC2Value = 0;
+ uint32_t            uwDutyCycle = 0;
+ uint32_t            uwFrequency = 0;
+ uint32_t            tmpDuty = 0;
 
 static double  Frequency;
 static double freAry[20];
+static double  tmpFre = 0;
 static int flag = 0;
+static int dflag = 0;
 OS_EVENT *KeyBox;
 OS_EVENT *FreBox;
-
+fifo_t *pFIFO = NULL;
 /***********************************************************************************************
                                     Declaretion
 ***********************************************************************************************/
@@ -69,9 +77,9 @@ static  void  App_TaskStart (void        *p_arg);
 static void App_MenuManger(void *parg);
 static void App_KeyManager(void *p_arg);
 static void App_Frequency(void *parg);
-static double tmpFre = 0;
+static void App_DutyMeasure(void*);
 
-void *inFunc(void* p)
+void *FreinFunc(void* p)
 {
    p = p;
    Menu_cursorOFF();
@@ -80,9 +88,31 @@ void *inFunc(void* p)
    return NULL;
 }
 
+void *FreoutFunc(void *p)
+{
+    p = p;
+    Menu_cursorON();
+    Menu_CurMenu()->Buffer->opt = NODis;
+    Menu_CurMenu()->Buffer->Next->opt = NODis;
+    return NULL;
+}
+
+void *inFunc(void* p)
+{
+   p = p;
+   Menu_cursorOFF();
+   Menu_CurMenu()->Buffer->opt = Dis;
+   Menu_CurMenu()->Buffer->Next->opt = Dis;
+   HAL_TIM_IC_Start_IT(&PWMTimHandle, TIM_CHANNEL_2);
+   HAL_TIM_IC_Start_IT(&PWMTimHandle, TIM_CHANNEL_1);
+   return NULL;
+}
+
 void *outFunc(void *p)
 {
     p = p;
+    HAL_TIM_IC_Stop_IT(&PWMTimHandle, TIM_CHANNEL_2);
+    HAL_TIM_IC_Stop_IT(&PWMTimHandle, TIM_CHANNEL_1);
     Menu_cursorON();
     Menu_CurMenu()->Buffer->opt = NODis;
     Menu_CurMenu()->Buffer->Next->opt = NODis;
@@ -111,17 +141,23 @@ static void Updata(unsigned char x, unsigned char y,uchar align, Menu_Opt_t opt,
 */
 
 static char Frequency_Buf[35];
+static char DutyBuf[4];
+
 printBuffer_t *bp = Menu_GenPrintBufferList("Frequency : ",NODis,0,0,
                                   Menu_GenPrintBufferList(Frequency_Buf,NODis,1,0,NULL));
+
+printBuffer_t *dutyBuffer = Menu_GenPrintBufferList("Duty : ",NODis,0,0,Menu_GenPrintBufferList(DutyBuf,NODis,1,0,NULL));
+
 actFuncAndArg_t *pIN = Menu_GenActList(inFunc,NULL,NULL);
 actFuncAndArg_t *pOUT = Menu_GenActList(outFunc,NULL,NULL);
-int Line = 0;
+actFuncAndArg_t *pFREIN = Menu_GenActList(FreinFunc,NULL,NULL);
+actFuncAndArg_t *pFREOUT = Menu_GenActList(FreoutFunc,NULL,NULL);
+
 int  main (void)
 {
 
       HAL_Init();
-      SystemClock_Config_168M();
-
+      SystemClock_Config_84M();
 
 
       menu_t *mainMenu = Menu_NewMenu("Root",0,0,0,NULL,NULL,NULL,Updata,NULL);
@@ -146,10 +182,10 @@ int  main (void)
                      NULL,
                      Updata,NULL);
       Menu_NewMenu("1 Freq Measure",0,1, 5, Signals,
-                     pIN,
-                     pOUT,
+                     pFREIN,
+                     pFREOUT,
                      Updata,bp);
-      Menu_NewMenu("2 Output",1,1,6, Signals,NULL,NULL,Updata,NULL);
+      Menu_NewMenu("2 Duty Measure",1,1,6, Signals,pIN,pOUT,Updata,dutyBuffer);
 
 
     /* Disable all ints until we are ready to accept them.  */
@@ -175,7 +211,8 @@ int  main (void)
                              (INT32U          ) 200,
                              (void          * )0,
                              (INT16U          )(OS_TASK_OPT_STK_CLR | OS_TASK_OPT_STK_CHK));
-     OSTaskCreateExt((void (*)(void *)) App_KeyManager,
+
+    OSTaskCreateExt((void (*)(void *)) App_KeyManager,
                              (void          * ) 0,
                              (OS_STK        * )&KeyManagerStk[200 - 1],
                              (INT8U           ) Key_Manager_Prio,
@@ -184,12 +221,23 @@ int  main (void)
                              (INT32U          ) 200,
                              (void          * )0,
                              (INT16U          )(OS_TASK_OPT_STK_CLR | OS_TASK_OPT_STK_CHK));
+
      OSTaskCreateExt((void (*)(void *)) App_Frequency,
                              (void          * ) 0,
                              (OS_STK        * )&FrequencyStk[200 - 1],
                              (INT8U           ) Frequency_Prio,
                              (INT16U          ) Frequency_Prio,
                              (OS_STK        * )&FrequencyStk[0],
+                             (INT32U          ) 200,
+                             (void          * )0,
+                             (INT16U          )(OS_TASK_OPT_STK_CLR | OS_TASK_OPT_STK_CHK));
+
+          OSTaskCreateExt((void (*)(void *)) App_DutyMeasure,
+                             (void          * ) 0,
+                             (OS_STK        * )&DutySTK[200 - 1],
+                             (INT8U           ) Duty_Prio,
+                             (INT16U          ) Duty_Prio,
+                             (OS_STK        * )&DutySTK[0],
                              (INT32U          ) 200,
                              (void          * )0,
                              (INT16U          )(OS_TASK_OPT_STK_CLR | OS_TASK_OPT_STK_CHK));
@@ -225,6 +273,7 @@ static  void  App_TaskStart (void *p_arg)
     OSStatInit();
     Timer_ICInit(TIM2,1,0xFFFF,0,0,UP,RISING,1);
     TimerBaseInit(TIM1,(8400-1),0,2500 - 1 ,UP);
+    PWMICInit();
 
         while(1){
             OSTaskSuspend(APP_TASK_START_PRIO);
@@ -251,7 +300,7 @@ static void App_MenuManger(void *parg)
 {
     parg = parg;
     User_GPIOEXTI(GPIOA,15,GPIO_MODE_IT_FALLING,FAST,PULLUP,5,1);
-    User_GPIOEXTI(GPIOB,7, GPIO_MODE_IT_FALLING,FAST,PULLUP,5,2);
+    User_GPIOEXTI(GPIOA,4, GPIO_MODE_IT_FALLING,FAST,PULLUP,5,2);
     User_GPIOEXTI(GPIOB,0, GPIO_MODE_IT_FALLING,FAST,PULLUP,5,3);
     User_GPIOEXTI(GPIOC,2, GPIO_MODE_IT_FALLING,FAST,PULLUP,5,4);
 
@@ -291,26 +340,26 @@ static void App_KeyManager(void *parg)
     while(1){
          OSTaskSuspend(Key_Manager_Prio);
         if (!HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2)){
-            OSTimeDly(10);
+            OSTimeDly(30);
             if (!HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2)){
                  Key = PRE;
                  OSMboxPost(KeyBox,&Key);
              }
         }else if(!HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0)){
-              OSTimeDly(10);
+              OSTimeDly(30);
              if (!HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0)){
                     Key = NEXT;
                    OSMboxPost(KeyBox,&Key);
              }
         }else if(!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_15)){
-               OSTimeDly(10);
+               OSTimeDly(30);
              if (!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_15)){
                     Key = ENTER;
                     OSMboxPost(KeyBox,&Key);
              }
-        }else if (!HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_7)){
-                OSTimeDly(10);
-              if (!HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_7)){
+        }else if (!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4)){
+                OSTimeDly(30);
+              if (!HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4)){
                     Key = BACK;
                    OSMboxPost(KeyBox,&Key);
              }
@@ -359,7 +408,6 @@ void App_Frequency(void *parg)
         if (flag){
           tmpFre *= 4;
           tmpFre = a*pow(tmpFre,b) + c;
-          //User_printf(0,0,Align,"%d ",(int)(tmpFre));
           sprintf(Frequency_Buf,"%d",(int)tmpFre);
           Menu_RefreshBuffer();
           flag = 0;
@@ -368,10 +416,55 @@ void App_Frequency(void *parg)
 }
 
 
+/*********************************************************************************************************
+*                                          App_TaskStart()
+*
+* Description : 主进程，它是所有进程的父进程。进行相关初始化之后创建其它进程，之后被挂起，且不再唤醒。
+*
+* Argument(s) : p_arg       Argument passed to 'App_TaskStart()' by 'OSTaskCreate()'.
+*
+* Return(s)   : none.
+*
+* Caller(s)   : This is a task.
+*
+* Note(s)     : none.
+*********************************************************************************************************
+*/
+static  void  App_DutyMeasure (void *p_arg)
+{
+    p_arg = p_arg;
+
+         while(1)
+      {
+          OSTaskSuspend(Duty_Prio);
+        if (dflag){
+           sprintf(DutyBuf,"%d %",(int)uwDutyCycle + 1);
+           OSTimeDly(800);
+          Menu_RefreshBuffer();
+          dflag = 0;
+        }
+      }
+}
+
+
+
+/**************************************************************************************
+                                  中断响应函数
+*************************************************************************************/
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
-      /*couter*/
-    Frequency++;
+    if (htim->Instance == TIM4)
+  {
+    uwIC2Value = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
+    if (uwIC2Value != 0){
+      uwDutyCycle = ((HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1)) * 100) / uwIC2Value;
+    }
+    else
+      uwDutyCycle = 0;
+      OSTaskResume(Duty_Prio);
+    dflag = 1;
+  }else  Frequency++;
+
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -391,9 +484,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
        tmpFre /= 10.0;
        num = 0;
        flag =  1;
+      OSTaskResume(Frequency_Prio);
     }
-
-    OSTaskResume(Frequency_Prio);
     Frequency = 0;
 }
 
@@ -401,4 +493,3 @@ void HAL_GPIO_EXTI_Callback ( uint16_t GPIO_Pin)
 {
    OSTaskResume(Key_Manager_Prio);
 }
-

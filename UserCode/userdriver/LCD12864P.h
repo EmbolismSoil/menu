@@ -8,7 +8,7 @@
 #ifndef LCD12864P_H_
 #define LCD12864P_H_
 
-#define ucosii 1
+//#define ucosii 1
 typedef  unsigned int uint;
 typedef  unsigned char uchar;
 

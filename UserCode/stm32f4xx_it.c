@@ -183,6 +183,10 @@ void EXTI2_IRQHandler(void)
 {
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
 }
+void EXTI4_IRQHandler(void)
+{
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
+}
 
 void EXTI3_IRQHandler(void)
 {
@@ -193,8 +197,6 @@ void EXTI9_5_IRQHandler(void)
 {
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_7);
 }
-
-
 
 void TIM1_CC_IRQHandler(void)
 {
@@ -209,6 +211,11 @@ void TIM1_UP_TIM10_IRQHandler(void)
 void TIM2_IRQHandler(void)
 {
      HAL_TIM_IRQHandler( TIMIC_GetTimHandle());
+}
+
+void TIM4_IRQHandler(void)
+{
+     HAL_TIM_IRQHandler( &PWMTimHandle);
 }
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */

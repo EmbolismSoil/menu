@@ -97,8 +97,8 @@ menu_t* Menu_RefreshBuffer(void)
                    }
                    head->Updata(tmpBuffer->x,tmpBuffer->y,
                                    Align,Dis,tmpBuffer->printString);
-                   tmpBuffer = tmpBuffer->Next;
               }
+               tmpBuffer = tmpBuffer->Next;
           }
       }
 

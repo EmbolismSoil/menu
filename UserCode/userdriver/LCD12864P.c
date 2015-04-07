@@ -9,6 +9,8 @@
 #include "stm32f4xx_nucleo.h"
 #include <stdio.h>
 
+    OS_CPU_SR  cpu_sr = 0;
+
 /**************************************
               Transplantation
 **************************************/
@@ -92,7 +94,9 @@ void User_printf (uchar x, uchar y,uchar align, const char *fmt,...)
         vsprintf(printbuffer, fmt, args);
         va_end (args);
 
-        /* Print the string */
+//OS_ENTER_CRITICAL();
+
+/* Print the string */
         lcd_pos(x,y);
         while(*p){
              Send(1,*(p++));
@@ -103,6 +107,7 @@ void User_printf (uchar x, uchar y,uchar align, const char *fmt,...)
                  if (align)  lcd_pos(++x,y);
                  else lcd_pos(++x,0);
         }
+//OSTaskIdleHook();
 
 }
 
@@ -153,8 +158,8 @@ static void Send(uchar type,uchar transdata)//0-写控制命令，1-写数据
 						cyCLK_Low();
                 }
                 //三个字节之间一定要有足够的延时，否则易出现时序问题
-                if(j == 3)        delay_nms(1);
-                else               delay_nms(1);
+                if(j == 3)        delay_nms(5);
+                else               delay_nms(5);
 
                 j--;
         }

@@ -4,6 +4,7 @@
 #include "stm32f4xx_nucleo.h"
 
 
+
 #define Timer_ICInit(TIMx,Channel,_Period,_Prescaler,_ClockDivision,\
        _CounterMode,_ICPolarity,_ICPrescaler)\
 do{\
@@ -24,5 +25,9 @@ do{\
 extern void HAL_TIM_IC_MspInit(TIM_HandleTypeDef *htim);
 extern   TIM_HandleTypeDef *TIMIC_GetTimHandle(void);
 extern   TIM_IC_InitTypeDef *TIMIC_GetsICConfig(void);
+extern  void PWMICInit(void);
+  extern TIM_HandleTypeDef        PWMTimHandle;
+  extern TIM_IC_InitTypeDef       PWMsConfig;
+  extern TIM_SlaveConfigTypeDef   sSlaveConfig;
 
 #endif
