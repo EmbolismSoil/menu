@@ -91,6 +91,17 @@ ShowTimeLog=1
 SumEnabled=0
 ShowTimeSum=1
 SumSortOrder=0
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[CallStackLog]
+Enabled=0
+[CallStackStripe]
+ShowTiming=1
 [Disassemble mode]
 mode=0
 [Breakpoints2]
@@ -99,13 +110,6 @@ Bp1=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\UserCode\timer_IC.c}.106.3" 0 0 1 "" 0 "" 0
 Bp2=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..}.206.5" 0 0 1 "" 0 "" 0
 Bp3=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\TestProj\UserCode\timer_Base.c}.14.1" 0 0 1 "" 0 "" 0
 Count=4
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Aliases]
 A0=_ "D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.0\arm\CMSIS\Include\core_cm4.h" ""
 A1=_ "E:\电赛\训练\软件\libtest\BSP\startup_stm32f401xe.s" ""
@@ -117,7 +121,3 @@ A6=_ "E:\项目\IAR项目文件\STM32_NUCLEO\stm32cubef4\STM32Cube_FW_F4_V1.3.0\Driver
 A7=_ "E:\项目\IAR项目文件\STM32_NUCLEO\stm32cubef4\STM32Cube_FW_F4_V1.3.0\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c" ""
 Count=8
 SuppressDialog=0
-[CallStackLog]
-Enabled=0
-[CallStackStripe]
-ShowTiming=1
