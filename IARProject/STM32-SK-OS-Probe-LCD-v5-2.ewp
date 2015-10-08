@@ -99,7 +99,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>STM32F401xE	ST STM32F401xE</state>
+          <state>STM32F407VE	ST STM32F407VE</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -231,7 +231,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>10010100</state>
+          <state>00000000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -314,6 +314,7 @@
           <state>$PROJ_DIR$\..\uC-Probe\Target\Communication\Generic\RS-232\Ports\ST\STM32</state>
           <state>$PROJ_DIR$\..\CPU\ST\STM32\m4inc</state>
           <state>$PROJ_DIR$\..\UserCode</state>
+          <state>$PROJ_DIR$\..\UserCode\inc</state>
           <state>$PROJ_DIR$\..\UserCode\userdriver</state>
         </option>
         <option>
@@ -334,7 +335,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -343,7 +344,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -725,11 +726,11 @@
         </option>
         <option>
           <name>IlinkIcfOverride</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>E:\&#x7535;&#x8D5B;\&#x8BAD;&#x7eC3;\&#x8F6F;&#x4eF6;\userProj\BSP\stm32f401xe_flash.icf</state>
+          <state>$TOOLKIT_DIR$\config\linker\ST\stm32f407xE.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -777,8 +778,8 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$\..\StaticLib\stm32f401DriverLib.a</state>
-          <state>$PROJ_DIR$\..\StaticLib\ucosii.a</state>
+          <state>$PROJ_DIR$\..\StaticLib\STM32-SK-OS-Probe-LCD-v5-2.a</state>
+          <state>$PROJ_DIR$\..\StaticLib\STM32F407HalDriverLib.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -958,6 +959,11 @@
     </settings>
     <settings>
       <name>BILINK</name>
+      <archiveVersion>0</archiveVersion>
+      <data/>
+    </settings>
+    <settings>
+      <name>Coder</name>
       <archiveVersion>0</archiveVersion>
       <data/>
     </settings>

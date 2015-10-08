@@ -16,7 +16,7 @@ TypeViolation=1
 UnspecRange=1
 ActionState=1
 [DebugChecksum]
-Checksum=1139020185
+Checksum=-1058871865
 [CodeCoverage]
 Enabled=_ 0
 [Exceptions]
@@ -91,6 +91,8 @@ ShowTimeLog=1
 SumEnabled=0
 ShowTimeSum=1
 SumSortOrder=0
+[JLinkDriver]
+CStepIntDis=_ 0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -105,11 +107,15 @@ ShowTiming=1
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\UserCode\timer_IC.c}.106.3" 0 0 1 "" 0 "" 0
+Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\UserCode\timer_IC.c}.106.1" 0 0 1 "" 0 "" 0
 Bp1=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\UserCode\timer_IC.c}.106.3" 0 0 1 "" 0 "" 0
-Bp2=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..}.206.5" 0 0 1 "" 0 "" 0
+Bp2=_ 0 "EMUL_CODE" "{E:\电赛\训练\软件\userProj}.206.5" 0 0 1 "" 0 "" 0
 Bp3=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\TestProj\UserCode\timer_Base.c}.14.1" 0 0 1 "" 0 "" 0
-Count=4
+Bp4=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\ucoslib\F104_UCOS\uCOS-II\Source\os_core.c}.1624.17" 0 0 1 "" 0 "" 0
+Bp5=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\ucoslib\F104_UCOS\uCOS-II\Source\os_core.c}.1609.16" 0 0 1 "" 0 "" 0
+Bp6=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\UserCode\app.c}.272.5" 0 0 1 "" 0 "" 0
+Bp7=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\UserCode\app.c}.275.5" 0 0 1 "" 0 "" 0
+Count=8
 [Aliases]
 A0=_ "D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.0\arm\CMSIS\Include\core_cm4.h" ""
 A1=_ "E:\电赛\训练\软件\libtest\BSP\startup_stm32f401xe.s" ""

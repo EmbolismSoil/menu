@@ -4,35 +4,36 @@
               Your header
 ***************************************/
 #include "User_GPIO.h"
-#include <includes.h>
 #include "stm32f4xx_hal.h"
-#include "stm32f4xx_nucleo.h"
 #include <stdio.h>
+#include <stdarg.h>
 
-    OS_CPU_SR  cpu_sr = 0;
 
 /**************************************
               Transplantation
 **************************************/
-#define cyCS_High() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_4,GPIO_PIN_SET)
-#define cyCS_Low() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_4,GPIO_PIN_RESET)
+
+/*
+ *  RS = PA01 WR = PA05 E = PA07
+ *
+ */
+#define cyCS_High() HAL_GPIO_WritePin (GPIOA, GPIO_PIN_1,GPIO_PIN_SET)
+#define cyCS_Low() HAL_GPIO_WritePin (GPIOA, GPIO_PIN_1,GPIO_PIN_RESET)
 
 
-#define cySID_High() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_5,GPIO_PIN_SET)
-#define cySID_Low()  HAL_GPIO_WritePin (GPIOB, GPIO_PIN_5,GPIO_PIN_RESET)
+#define cySID_High() HAL_GPIO_WritePin (GPIOA, GPIO_PIN_3,GPIO_PIN_SET)
+#define cySID_Low()  HAL_GPIO_WritePin (GPIOA, GPIO_PIN_3,GPIO_PIN_RESET)
 
-#define cyCLK_High() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_3,GPIO_PIN_SET)
-#define cyCLK_Low() HAL_GPIO_WritePin (GPIOB, GPIO_PIN_3,GPIO_PIN_RESET)
+#define cyCLK_High() HAL_GPIO_WritePin (GPIOA, GPIO_PIN_7,GPIO_PIN_SET)
+#define cyCLK_Low() HAL_GPIO_WritePin (GPIOA, GPIO_PIN_7,GPIO_PIN_RESET)
 
-#define cyCS_Input()  User_GPIOInit(GPIOB,4,GPIO_MODE_INPUT,FAST,PULLUP)
-#define cySID_Input() User_GPIOInit(GPIOB,5,GPIO_MODE_INPUT,FAST,PULLUP)
-#define cyCLK_Input() User_GPIOInit(GPIOB,3,GPIO_MODE_INPUT,FAST,PULLUP)
+
 
 #define IO_Init()\
 do{\
-	User_GPIOInit(GPIOB,3,GPIO_MODE_OUTPUT_PP,FAST,PULLUP);\
-	User_GPIOInit(GPIOB,4,GPIO_MODE_OUTPUT_PP,FAST,PULLUP);\
-	User_GPIOInit(GPIOB,5,GPIO_MODE_OUTPUT_PP,FAST,PULLUP);\
+	User_GPIOInit(GPIOA,1,GPIO_MODE_OUTPUT_PP,FAST,PULLUP);\
+	User_GPIOInit(GPIOA,3,GPIO_MODE_OUTPUT_PP,FAST,PULLUP);\
+	User_GPIOInit(GPIOA,7,GPIO_MODE_OUTPUT_PP,FAST,PULLUP);\
 }while(0)
 
 /*******************************************
@@ -48,7 +49,7 @@ do{\
 static void delay_1ms_pro()
 {
         uint i;
-        for(i=0;i<1140;i++);
+        for(i=0;i<22400;i++);
 }
 
 static void delay_nms_pro(uint n)
@@ -158,8 +159,8 @@ static void Send(uchar type,uchar transdata)//0-写控制命令，1-写数据
 						cyCLK_Low();
                 }
                 //三个字节之间一定要有足够的延时，否则易出现时序问题
-                if(j == 3)        delay_nms(5);
-                else               delay_nms(5);
+                if(j == 3)        delay_nms(10);
+                else               delay_nms(10);
 
                 j--;
         }
